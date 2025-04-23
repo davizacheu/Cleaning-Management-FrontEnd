@@ -12,25 +12,23 @@ This application is a management platform for cleaning service companies, connec
 - **Deployment**: Optimized for cloud deployment with minimal configuration
 
 ## Project Structure
-cleaning-service-platform/
-├── public/                       # Static assets
-├── src/
-│   ├── assets/                   # Images, fonts, and other static resources
-│   ├── components/               # Reusable UI components
-│   │   ├── common/               # Generic components used across the app
-│   │   ├── layout/               # Layout components (header, footer, etc.)
-│   │   └── pages/                # Page-specific components
-│   ├── context/                  # React Context providers
-│   ├── hooks/                    # Custom React hooks
-│   ├── net/                      # Networking layer
-│   │   ├── apiCommunicator.js    # Core API communication handler
-│   │   └── responses.js          # Response handling and validation
-│   ├── services/                 # Business logic and service integrations
-│   │   └── userService.js        # User authentication and profile management
-│   ├── utils/                    # Utility functions and helpers
-│   ├── App.jsx                   # Main application component
-│   └── main.jsx                  # Application entry point
-└── index.html                    # HTML template
+# Project Structure
+
+```plaintext
+src/
+├── assets/
+├── component/
+├── context/
+├── hook/
+├── model/
+├── pages/
+├── styles/
+├── utils/
+├── App.css
+├── App.jsx
+├── index.css
+└── main.jsx
+```
 
 ## Key Features
 
