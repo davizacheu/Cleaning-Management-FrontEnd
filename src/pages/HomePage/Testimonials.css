@@ -1,0 +1,108 @@
+/* src/component/Testimonials/Testimonials.css */
+.testimonials {
+  padding: 5rem 0;
+  background-color: var(--bg-light, #f8fafc);
+}
+
+.testimonials .section-title {
+  text-align: center;
+  margin-bottom: 3rem;
+  font-size: 2.25rem;
+  color: var(--text-dark, #1e293b);
+}
+
+.testimonial-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.testimonial-card {
+  background-color: white;
+  border-radius: 8px;
+  padding: 2rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.testimonial-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+.testimonial-content {
+  margin-bottom: 1.5rem;
+  flex-grow: 1;
+}
+
+.testimonial-content p {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  color: var(--text-medium, #334155);
+  font-style: italic;
+  position: relative;
+}
+
+/* Update the rule for the opening quote */
+.testimonial-content p::before {
+  content: '"';
+  font-size: 2.0rem;
+  color: var(--accent, #4a90e2);
+  opacity: 0.5;
+  position: absolute;
+  top: -1rem;
+  left: -1.2rem;
+  line-height: 1;
+}
+
+/* Update the rule for the closing quote */
+.testimonial-content p::after {
+  content: '"';
+  font-size: 2.0rem; /* Match the text size */
+  color: var(--accent, #4a90e2); /* Match text color */
+  opacity: 0.5;
+  position: relative;
+  display: inline;
+  line-height: 0;
+  vertical-align: baseline;
+  margin-left: 1px;
+}
+
+
+
+.testimonial-author {
+  border-top: 1px solid #e2e8f0;
+  padding-top: 1rem;
+}
+
+.testimonial-author h4 {
+  font-size: 1.1rem;
+  margin-bottom: 0.25rem;
+  color: var(--text-dark, #1e293b);
+}
+
+.testimonial-author p {
+  font-size: 0.9rem;
+  color: var(--text-light, #64748b);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .testimonial-grid {
+    grid-template-columns: 1fr;
+    padding: 0 1rem;
+  }
+  
+  .testimonials {
+    padding: 3rem 0;
+  }
+  
+  .testimonials .section-title {
+    font-size: 1.75rem;
+    margin-bottom: 2rem;
+  }
+}

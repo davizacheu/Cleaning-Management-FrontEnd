@@ -1,0 +1,19 @@
+/* App.css - Simplified Version */
+
+/* Import core style modules */
+@import 'styles/variables.css';  /* CSS variables */
+@import 'styles/base.css';       /* Base styles */
+@import 'styles/layout.css';     /* Layout utilities */
+@import 'styles/buttons.css';    /* Button styles */
+@import 'styles/forms.css';      /* Form styles */
+
+/* Import section styles */
+@import 'styles/sections/features.css'; /* Features section */
+@import 'styles/sections/stats.css';    /* Stats section */
+
+/* Import page-specific styles */
+@import 'pages/HomePage/HomePage.css';     /* Home page styles */
+@import 'pages/UserDashboard/UserDashboard.css'; /* Dashboard styles */
+
+/* Import modal styles */
+@import 'component/AddRoleModal/AddRoleModal.module.css'; /* Role modal */

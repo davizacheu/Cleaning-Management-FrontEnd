@@ -1,0 +1,284 @@
+/* AddRequestModal.module.css */
+body.modalOpen {
+  overflow: hidden;
+  position: fixed;
+  width: 100%;
+  height: 100%;
+}
+
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  padding: 1rem;
+}
+
+.modalContainer {
+  background-color: white;
+  border-radius: 8px;
+  width: 100%;
+  max-width: 550px;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+}
+
+.modalHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--spacing-lg);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.modalHeader h3 {
+  margin: 0;
+  color: var(--color-text);
+  font-weight: 600;
+  font-size: 1.25rem;
+}
+
+.addRequestForm {
+  padding: 1.5rem;
+}
+
+/* Common input styles */
+.addRequestForm input,
+.addRequestForm textarea,
+.formSection input,
+.formSection textarea {
+  width: 100%;
+  font-size: 0.875rem;
+  font-family: inherit;
+  color: var(--color-text, #374151);
+  border: 1px solid var(--color-border, #e5e7eb);
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+/* Specific styles for addRequestForm */
+.addRequestForm input,
+.addRequestForm textarea {
+  padding: var(--spacing-sm);
+  background-color: var(--color-background);
+  border-radius: var(--radius-md);
+}
+
+/* Specific styles for formSection */
+.formSection {
+  margin-bottom: 1.25rem;
+}
+
+.formSection label {
+  display: block;
+  font-weight: 500;
+  font-size: 0.875rem;
+  color: var(--color-text, #374151);
+}
+
+.formSection input,
+.formSection textarea {
+  padding: 0.625rem;
+  border-radius: 6px;
+}
+
+/* Focus styles for all inputs */
+.addRequestForm input:focus,
+.addRequestForm textarea:focus,
+.formSection input:focus,
+.formSection textarea:focus {
+  outline: none;
+  border-color: var(--color-primary, #4f46e5);
+  box-shadow: 0 0 0 2px rgba(79, 70, 229, 0.1);
+}
+
+/* Standardized placeholder styling for all browsers */
+.addRequestForm input::placeholder,
+.addRequestForm textarea::placeholder,
+.formSection input::placeholder,
+.formSection textarea::placeholder,
+.addRequestForm input::-webkit-input-placeholder,
+.addRequestForm textarea::-webkit-input-placeholder,
+.formSection input::-webkit-input-placeholder,
+.formSection textarea::-webkit-input-placeholder,
+.addRequestForm input::-moz-placeholder,
+.addRequestForm textarea::-moz-placeholder,
+.formSection input::-moz-placeholder,
+.formSection textarea::-moz-placeholder {
+  font-family: inherit;
+  font-size: 0.875rem;
+  color: #9ca3af;
+  font-weight: normal;
+  font-style: normal;
+}
+
+/* Firefox-specific placeholder opacity fix */
+.addRequestForm input::-moz-placeholder,
+.addRequestForm textarea::-moz-placeholder,
+.formSection input::-moz-placeholder,
+.formSection textarea::-moz-placeholder {
+  opacity: 1;
+}
+
+.inputError {
+  border-color: #ef4444 !important;
+}
+
+.errorMessage {
+  color: #ef4444;
+  font-size: 0.75rem;
+  margin-top: 0.375rem;
+}
+
+.formErrorMessage {
+  background-color: #fee2e2;
+  color: #b91c1c;
+  padding: 0.75rem;
+  border-radius: 6px;
+  margin-bottom: 1.25rem;
+  font-size: 0.875rem;
+}
+
+.formRow {
+  display: flex;
+  gap: 1rem;
+}
+
+.formRow .formSection {
+  flex: 1;
+}
+
+.indefiniteCheckboxContainer {
+  display: flex;
+  align-items: center;
+  margin-top: 6px;
+  padding-left: 0;
+}
+
+.indefiniteCheckbox[type="checkbox"] {
+  width: auto !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  flex: none !important;
+  min-width: auto !important;
+  border: 1px solid var(--color-border, #e5e7eb) !important;
+  border-radius: 2px !important;
+}
+
+.indefiniteLabel {
+  font-size: 0.875rem;
+  white-space: nowrap;
+  margin: 0 0 0 8px;
+  font-weight: normal;
+}
+
+/* Style for required field asterisks */
+.requiredAsterisk {
+  color: #ef4444;
+  margin-left: 2px;
+}
+
+/* Modal actions container */
+.formActions {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--spacing-md);
+  margin-top: var(--spacing-lg);
+}
+
+/*Upload Icon (Optional) Section*/
+.imageUploadContainer {
+  margin-top: 0.5rem;
+}
+
+.uploadLabel {
+  display: inline-block;
+  cursor: pointer;
+}
+
+.uploadArea {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  border: 2px dashed var(--color-border, #e5e7eb);
+  border-radius: 6px;
+  background-color: var(--color-background-light, #f9fafb);
+}
+
+.fileInput {
+  position: absolute;
+  width: 0.1px;
+  height: 0.1px;
+  opacity: 0;
+  overflow: hidden;
+  z-index: -1;
+}
+
+
+.uploadButton {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  background-color: var(--color-primary, #4f46e5);
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.uploadButton:hover {
+  background-color: var(--color-primary-dark, #4338ca);
+}
+
+.uploadButton:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(79, 70, 229, 0.4);
+}
+
+
+.imagePreviewWrapper {
+  position: relative;
+  display: inline-block;
+  margin-top: 0.5rem;
+}
+
+.imagePreview {
+  max-width: 100%;
+  max-height: 150px;
+  border-radius: 4px;
+  border: 1px solid var(--color-border, #e5e7eb);
+}
+
+.removeImageBtn {
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  background-color: #ef4444;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  padding: 0;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  transition: background-color 0.2s;
+}
+
+.removeImageBtn:hover {
+  background-color: #dc2626;
+}

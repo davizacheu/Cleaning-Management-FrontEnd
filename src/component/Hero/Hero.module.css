@@ -1,0 +1,81 @@
+/* component/Hero.module.css */
+/* component/Hero.module.css */
+.hero {
+  padding: 5rem 0;
+  position: relative;
+  background: linear-gradient(to right, #f1f5f9, #e0f2fe);
+  overflow: hidden;
+}
+
+.heroContent {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+}
+
+.heroText {
+  flex: 1;
+  max-width: 600px;
+}
+
+.heroText h2 {
+  font-size: 3rem;
+  margin-bottom: 1.5rem;
+  color: #0f172a;
+  line-height: 1.2;
+}
+
+.heroText p {
+  font-size: 1.25rem;
+  margin-bottom: 2rem;
+  color: var(--color-text-light);
+}
+
+.heroButtons {
+  display: flex;
+  gap: 1rem;
+}
+
+.heroImage {
+  flex: 1;
+  background: url('../../assets/guy-cleaning.svg') no-repeat center center;
+  background-size: contain;
+  min-height: 400px;
+}
+
+.ctaBtn {
+  padding: 0.8rem 1.5rem;
+  font-size: 1rem;
+  font-weight: 500;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: none;
+}
+
+.ctaBtn.primary {
+  background-color: var(--color-primary);
+  color: white;
+}
+
+.ctaBtn.primary:hover {
+  background-color: var(--color-primary-dark);
+}
+
+.ctaBtn.secondary {
+  background-color: transparent;
+  color: var(--color-primary);
+  border: 1px solid var(--color-primary);
+}
+
+.ctaBtn.secondary:hover {
+  background-color: rgba(2, 132, 199, 0.1);
+}
+
+.ctaBtn.large {
+  padding: 1rem 2rem;
+  font-size: 1.125rem;
+}
+
+/* Make sure to update the hero image path to be relative to the new file location */

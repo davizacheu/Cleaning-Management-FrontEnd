@@ -1,0 +1,62 @@
+/*Standard styles for action buttons*/
+.btn {
+  padding: var(--spacing-sm) var(--spacing-lg);
+  border-radius: var(--radius-md);
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: none;
+}
+
+.btn-primary {
+  background-color: var(--color-primary);
+  color: white;
+}
+
+.btn-primary:hover {
+  background-color: var(--color-primary-dark);
+}
+
+.btn-primary:disabled {
+  background-color: var(--color-border);
+  cursor: not-allowed;
+}
+
+/*Standard styles used for secondary buttons (complimentary to primary)*/
+.btn-secondary {
+  background-color: var(--color-background);
+  color: var(--color-text);
+  border: 1px solid var(--color-border);
+}
+
+.btn-secondary:hover {
+  background-color: var(--color-background-alt);
+}
+
+/*Sytles for the X close button*/
+.x-close-btn {
+  background: none;
+  border: none;
+  font-size: 1.25rem;
+  cursor: pointer;
+  color: var(--color-text-light);
+  padding: 5px;
+  width: 30px;  /* Add fixed width */
+  height: 30px; /* Add fixed height */
+  display: flex; /* Add flex display */
+  align-items: center; /* Center content vertically */
+  justify-content: center; /* Center content horizontally */
+  border-radius: 50%;
+  transition: background-color 0.2s ease, color 0.2s ease, transform 0.1s ease;
+}
+
+
+.x-close-btn:hover {
+  background-color: rgba(0, 0, 0, 0.1);
+  color: var(--color-text);
+}
+
+.x-close-btn:active {
+  background-color: rgba(0, 0, 0, 0.2);
+  transform: scale(0.95);
+}

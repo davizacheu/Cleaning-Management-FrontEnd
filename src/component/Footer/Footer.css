@@ -1,0 +1,222 @@
+/* Footer.css */
+.footer {
+  background-color: var(--primary-dark, #1a2b3c);
+  color: var(--text-light, #ffffff);
+  padding: 4rem 0 2rem;
+  /* Removed the margin-top: 3rem; that was causing the space */
+}
+
+.footer-content {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 2rem;
+}
+
+.footer-main {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+  gap: 2rem;
+  justify-content: space-between; /* Keep spacing between sections */
+}
+
+.footer-brand {
+  flex: 1 1 300px;
+  max-width: 300px; /* Limit width to prevent stretching */
+}
+
+.footer-logo {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.footer-brand-logo {
+  height: 40px;
+  margin-right: 0.75rem;
+}
+
+.footer-tagline {
+  margin-bottom: 1.5rem;
+  color: var(--text-muted, #a0aec0);
+}
+
+.footer-social {
+  display: flex;
+  gap: 1rem;
+}
+
+.footer-social a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.1);
+  color: var(--text-light, #ffffff);
+  transition: background-color 0.3s ease;
+}
+
+.footer-social a:hover {
+  background-color: var(--accent, #4a90e2);
+}
+
+.footer-links {
+  display: flex;
+  flex-wrap: nowrap; /* Prevent wrapping within the links section */
+  gap: 2.5rem;
+  flex: 2 1 500px;
+  max-width: 500px; /* Ensure it doesn't grow too wide */
+}
+
+.footer-links-column {
+  flex: 1;
+  min-width: 140px; /* Ensure columns have enough width */
+}
+
+.footer-links-column h4 {
+  margin-bottom: 1.25rem;
+  font-size: 1rem;
+}
+
+.footer-links-column ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.footer-links-column li {
+  margin-bottom: 0.75rem;
+}
+
+.footer-links-column a {
+  color: var(--text-muted, #a0aec0);
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.footer-links-column a:hover {
+  color: var(--text-light, #ffffff);
+}
+
+.footer-contact {
+  flex: 1 1 300px;
+  max-width: 300px; /* Control the width */
+  margin-left: auto; /* Push to the right side */
+}
+
+.footer-contact h4 {
+  margin-bottom: 1.25rem;
+  font-size: 1rem;
+}
+
+.footer-contact address {
+  font-style: normal;
+  margin-bottom: 1.5rem;
+}
+
+.contact-icon {
+  margin-right: 0.5rem;
+  color: var(--accent, #4a90e2);
+}
+
+.footer-newsletter h4 {
+  margin-bottom: 1rem;
+}
+
+.newsletter-form {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.newsletter-form input {
+  flex: 1;
+  padding: 0.75rem;
+  border: none;
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--text-light, #ffffff);
+}
+
+.subscribe-btn {
+  padding: 0.75rem 1.25rem;
+  background-color: var(--accent, #4a90e2);
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.subscribe-btn:hover {
+  background-color: var(--accent-dark, #3a80d2);
+}
+
+/* Make the layout more responsive */
+@media (min-width: 1024px) {
+  .footer-main {
+    flex-wrap: nowrap; /* Prevent wrapping on larger screens */
+  }
+
+  .footer-brand {
+    flex: 0 1 25%; /* Take 25% of space */
+  }
+
+  .footer-links {
+    flex: 0 1 50%; /* Take 50% of space */
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .footer-contact {
+    flex: 0 1 25%; /* Take 25% of space */
+  }
+}
+
+/* Tablet styles */
+@media (max-width: 1023px) and (min-width: 769px) {
+  .footer-links {
+    flex-wrap: nowrap;
+    justify-content: space-between;
+  }
+
+  .footer-links-column {
+    flex: 1;
+  }
+}
+
+/* For smaller screens, allow natural stacking */
+@media (max-width: 1023px) {
+  .footer-main {
+    flex-direction: column;
+  }
+
+  .footer-brand, .footer-links, .footer-contact {
+    max-width: 100%;
+    width: 100%;
+  }
+}
+
+@media (max-width: 768px) {
+  .footer-content {
+    flex-direction: column;
+  }
+
+  .footer-links {
+    flex-wrap: wrap;
+    gap: 1.5rem;
+  }
+
+  .footer-links-column {
+    flex: 1 1 calc(50% - 1.5rem);
+    min-width: 140px;
+  }
+}
+
+@media (max-width: 480px) {
+  .footer-links-column {
+    flex: 1 1 100%;
+  }
+}

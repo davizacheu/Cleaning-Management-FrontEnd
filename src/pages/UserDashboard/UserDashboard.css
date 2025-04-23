@@ -1,0 +1,143 @@
+/* pages/UserDashboard.css */
+
+/* Container wrapper */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+/* Overall dashboard container */
+.dashboard-container {
+  min-height: 100vh;
+  padding: 2rem 0;
+  background-color: var(--color-background-light);
+}
+
+/* Dashboard title */
+.dashboard-title {
+  margin-top: 0;
+  margin-bottom: 1.5rem;
+  color: var(--color-text);
+  font-weight: 700;
+  font-size: 2rem;
+}
+
+/* User info section */
+.user-info {
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.user-info h2 {
+  margin-top: 0;
+  margin-bottom: 0;
+  color: var(--color-primary);
+  font-size: 1.5rem;
+}
+
+/* Dashboard content area (cards container) */
+.dashboard-content {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+
+/* Dashboard card styling */
+.dashboard-card {
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  padding: 1.5rem;
+  display: flex;
+  align-items: flex-start;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.dashboard-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+/* Card icon styling */
+.card-icon {
+  color: var(--color-primary, #4f46e5);
+  font-size: 1.5rem;
+  margin-right: 1rem;
+  background-color: rgba(79, 70, 229, 0.1);
+  padding: 0.75rem;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Card content styling */
+.card-content {
+  flex: 1;
+}
+
+.card-content h3 {
+  margin-top: 0;
+  margin-bottom: 0.5rem;
+  color: var(--color-text);
+  font-weight: 600;
+}
+
+.card-content p {
+  margin: 0;
+  color: var(--color-text-light, #6b7280);
+}
+
+/* Make UserRoles component match the dashboard card styling */
+div > .user-roles-container {
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+div > .user-roles-container:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+/* Status indicators */
+.status-indicator {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  margin-right: 8px;
+}
+
+.status-active {
+  background-color: #10b981;
+}
+
+.status-pending {
+  background-color: #f59e0b;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .dashboard-content {
+    grid-template-columns: 1fr; /* Single column on mobile */
+  }
+
+  .dashboard-card {
+    flex-direction: column;
+  }
+
+  .card-icon {
+    margin-right: 0;
+    margin-bottom: 1rem;
+  }
+}

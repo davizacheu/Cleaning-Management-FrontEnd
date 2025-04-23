@@ -1,0 +1,31 @@
+/* styles/sections/stats.css */
+.stats {
+  padding: 3rem 0;
+  background-color: white;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.stats .container {
+  display: flex;
+  justify-content: space-around;
+  text-align: center;
+  flex-wrap: wrap;
+  gap: 2rem;
+}
+
+.stat-item {
+  flex: 1;
+  min-width: 180px;
+}
+
+.stat-item h3 {
+  font-size: 2.5rem;
+  color: var(--color-primary);
+  margin-bottom: 0.5rem;
+}
+
+.stat-item p {
+  font-size: 1.125rem;
+  color: var(--color-text-light);
+  margin: 0;
+}

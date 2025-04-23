@@ -1,0 +1,63 @@
+/* pages/HomePage.css */
+
+/* Overall page container */
+.home-page {
+  /* Any specific styles for the homepage wrapper */
+}
+
+/* Section spacing specific to homepage */
+.home-page .hero {
+  margin-bottom: 0; /* Remove margin if needed */
+}
+
+.home-page .stats {
+  /* Any homepage-specific modifications to the stats section */
+  margin-top: -2rem; /* Example: overlap with hero section */
+}
+
+.section-divider {
+  width: 100%;
+  height: 8px;
+  background-image: linear-gradient(to right,
+  rgba(74, 144, 226, 0.15),  /* Increased opacity at the start */
+  rgba(74, 144, 226, 0.4),   /* Peak opacity in the middle */
+  rgba(74, 144, 226, 0.15)   /* Increased opacity at the end */
+  );
+  margin: 3rem 0;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Add a subtle shadow effect */
+.section-divider::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background-image: linear-gradient(to right,
+  rgba(0, 0, 0, 0.05),       /* Increased opacity at the start */
+  rgba(0, 0, 0, 0.1),        /* Peak opacity in the middle */
+  rgba(0, 0, 0, 0.05)        /* Increased opacity at the end */
+  );
+}
+
+/* Styles for sections that only exist on the homepage */
+.testimonials-section {
+  padding: 5rem 0;
+  background-color: var(--color-background-alt);
+}
+
+/* Special spacing or arrangement needs */
+.home-features-wrapper {
+  margin-top: 3rem;
+  margin-bottom: 5rem;
+}
+
+/* Homepage-specific responsive adjustments */
+@media (max-width: 768px) {
+  .home-page .hero-content {
+    flex-direction: column-reverse;
+  }
+}

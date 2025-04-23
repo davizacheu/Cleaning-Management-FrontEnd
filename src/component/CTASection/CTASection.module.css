@@ -1,0 +1,93 @@
+/* component/CTASection.module.css */
+.ctaSection {
+    padding: 4rem 0;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.ctaSection.gradientBg {
+    background: linear-gradient(135deg, #0284c7, #0369a1);
+    color: white;
+}
+
+.ctaContent {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 0 var(--spacing-lg);
+}
+
+.ctaSection h2 {
+    font-size: 2.5rem;
+    margin-bottom: var(--spacing-lg);
+}
+
+.ctaSection p {
+    font-size: 1.25rem;
+    margin-bottom: var(--spacing-xl);
+    opacity: 0.9;
+}
+
+.ctaButtons {
+    display: flex;
+    justify-content: center;
+    gap: var(--spacing-md);
+    flex-wrap: wrap;
+}
+
+.ctaSection .ctaBtn.primary {
+    background-color: white;
+    color: var(--color-primary);
+}
+
+.ctaSection .ctaBtn.primary:hover {
+    background-color: rgba(255, 255, 255, 0.9);
+}
+
+.ctaSection .ctaBtn.secondary {
+    background-color: transparent;
+    color: white;
+    border: 1px solid white;
+}
+
+.ctaSection .ctaBtn.secondary:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.ctaBtn {
+    padding: 0.8rem 1.5rem;
+    font-size: 1rem;
+    font-weight: 500;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: none;
+}
+
+.ctaBtn.primary {
+    background-color: var(--color-primary);
+    color: white;
+}
+
+.ctaBtn.primary:hover {
+    background-color: var(--color-primary-dark);
+}
+
+.ctaBtn.secondary {
+    background-color: transparent;
+    color: var(--color-primary);
+    border: 1px solid var(--color-primary);
+}
+
+.ctaBtn.secondary:hover {
+    background-color: rgba(2, 132, 199, 0.1);
+}
+
+.ctaBtn.large {
+    padding: 1rem 2rem;
+    font-size: 1.125rem;
+}
+
+.ctaIcon {
+
+}

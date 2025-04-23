@@ -1,0 +1,408 @@
+/* components/AddRoleModal/AddRoleModal.module.css */
+body.modalOpen {
+  overflow: hidden;
+  position: fixed;
+  width: 100%;
+  height: 100%;
+}
+
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  padding: 1rem;
+}
+
+.modalContainer {
+  background-color: white;
+  border-radius: var(--radius-lg);
+  width: 90%;
+  max-width: 500px;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+}
+
+/* Custom scrollbar for the modal container */
+.modalContainer::-webkit-scrollbar {
+  width: 8px;               /* Width of the scrollbar */
+}
+
+.modalContainer::-webkit-scrollbar-track {
+  background: #f1f1f1;      /* Track color */
+  border-radius: 4px;       /* Rounded track */
+}
+
+.modalContainer::-webkit-scrollbar-thumb {
+  background: #666;  /* Darker neutral gray color */
+  border-radius: 4px;
+}
+
+.modalContainer::-webkit-scrollbar-thumb:hover {
+  background: #555;  /* Even darker when hovering */
+}
+
+/* For Firefox */
+.modalContainer {
+  scrollbar-width: thin;
+  scrollbar-color: #666 #f1f1f1;  /* Update thumb color to match */
+}
+
+.modalHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--spacing-lg);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.modalHeader h3 {
+  margin: 0;
+  color: var(--color-text);
+}
+
+.roleTypeSelector {
+  margin-bottom: var(--spacing-lg);
+}
+
+.roleOptions {
+  display: flex;
+  gap: var(--spacing-md);
+  margin-bottom: var(--spacing-md);
+}
+
+.roleOption {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center; /* Add this to center content vertically */
+  padding: var(--spacing-md);
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-align: center; /* Ensure text is centered */
+}
+
+.roleOption.active {
+  border-color: var(--color-primary);
+  background-color: rgba(var(--color-primary-rgb), 0.05);
+}
+
+.roleOption input[type="radio"] {
+  position: absolute;
+  opacity: 0;
+}
+
+.roleOption svg {
+  font-size: 2rem;
+  margin-bottom: var(--spacing-sm);
+  color: var(--color-primary);
+}
+
+.roleOption span {
+  font-weight: 500;
+  line-height: 1.2; /* Improve line spacing for multi-word labels */
+  max-width: 90%; /* Prevent text from getting too close to edges */
+  display: block; /* Ensure the text block is properly centered */
+}
+
+.formSection {
+  margin-bottom: var(--spacing-lg);
+  padding-bottom: var(--spacing-md);
+  border-bottom: 1px solid var(--color-border-light);
+}
+
+.formSection h4 {
+  margin-top: 0;
+  margin-bottom: var(--spacing-md);
+  color: var(--color-text);
+  font-weight: 600;
+}
+
+.formSection:last-of-type {
+  border-bottom: none;
+}
+
+.requiredAsterisk {
+  color: #ef4444;
+  margin-left: 2px;
+}
+
+.roleForm {
+  padding: 1.5rem;
+}
+
+/* Common input styles */
+.roleForm input,
+.roleForm textarea,
+.formGroup input,
+.formGroup textarea {
+  width: 100%;
+  font-size: 0.875rem;
+  font-family: inherit;
+  color: var(--color-text, #374151);
+  border: 1px solid var(--color-border, #e5e7eb);
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+/* Specific styles for roleForm */
+.roleForm input,
+.roleForm textarea {
+  padding: var(--spacing-sm);
+  background-color: var(--color-background);
+  border-radius: var(--radius-md);
+}
+
+/* Specific styles for formGroup */
+.formGroup {
+  margin-bottom: 1.25rem;
+}
+
+.formGroup label {
+  display: block;
+  font-weight: 500;
+  font-size: 0.875rem;
+  color: var(--color-text, #374151);
+}
+
+.formGroup input,
+.formGroup textarea {
+  padding: 0.625rem;
+  border-radius: 6px;
+}
+
+/* Focus styles for all inputs */
+.roleForm input:focus,
+.roleForm textarea:focus,
+.formGroup input:focus,
+.formGroup textarea:focus {
+  outline: none;
+  border-color: var(--color-primary, #4f46e5);
+  box-shadow: 0 0 0 2px rgba(79, 70, 229, 0.1);
+}
+
+/* Standardized placeholder styling for all browsers */
+.roleForm input::placeholder,
+.roleForm textarea::placeholder,
+.formGroup input::placeholder,
+.formGroup textarea::placeholder,
+.roleForm input::-webkit-input-placeholder,
+.roleForm textarea::-webkit-input-placeholder,
+.formGroup input::-webkit-input-placeholder,
+.formGroup textarea::-webkit-input-placeholder,
+.roleForm input::-moz-placeholder,
+.roleForm textarea::-moz-placeholder,
+.formGroup input::-moz-placeholder,
+.formGroup textarea::-moz-placeholder {
+  font-family: inherit;
+  font-size: 0.875rem;
+  color: #9ca3af;
+  font-weight: normal;
+  font-style: normal;
+}
+
+/* Firefox-specific placeholder opacity fix */
+.roleForm input::-moz-placeholder,
+.roleForm textarea::-moz-placeholder,
+.formGroup input::-moz-placeholder,
+.formGroup textarea::-moz-placeholder {
+  opacity: 1;
+}
+
+
+/* EXTERNAL LINKS FIELD */
+.linksGroup {
+  margin-bottom: var(--spacing-md);
+}
+
+.linksGroup label {
+  display: block;
+  margin-bottom: var(--spacing-xs);
+  font-weight: 500;
+}
+
+.linksInput {
+  position: relative;
+  width: 100%;
+}
+
+.linksInput input {
+  width: 100%;
+  padding: var(--spacing-sm) var(--spacing-sm) var(--spacing-sm) 35px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--color-border);
+  transition: border-color 0.2s ease;
+  background-color: var(--color-background);
+}
+
+.linksInput input:focus {
+  border-color: var(--color-primary);
+  outline: none;
+}
+
+.linksIcon {
+  position: absolute;
+  left: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--color-text-light);
+  pointer-events: none;
+}
+
+/* Optional: Add styling for link hints or help text */
+.linkHint {
+  font-size: 0.85rem;
+  color: var(--color-text-light);
+  margin-top: var(--spacing-xs);
+}
+
+/* COMPANY LOGO FIELD */
+.imageUploadContainer {
+  margin-top: 0.5rem;
+}
+
+.uploadLabel {
+  display: inline-block;
+  cursor: pointer;
+}
+
+.uploadArea {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  border: 2px dashed var(--color-border, #e5e7eb);
+  border-radius: 6px;
+  background-color: var(--color-background-light, #f9fafb);
+}
+
+.fileInput {
+  position: absolute;
+  width: 0.1px;
+  height: 0.1px;
+  opacity: 0;
+  overflow: hidden;
+  z-index: -1;
+}
+
+
+.uploadButton {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  background-color: var(--color-primary, #4f46e5);
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.uploadButton:hover {
+  background-color: var(--color-primary-dark, #4338ca);
+}
+
+.uploadButton:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(79, 70, 229, 0.4);
+}
+
+
+.imagePreviewWrapper {
+  position: relative;
+  display: inline-block;
+  margin-top: 0.5rem;
+}
+
+.imagePreview {
+  max-width: 100%;
+  max-height: 150px;
+  border-radius: 4px;
+  border: 1px solid var(--color-border, #e5e7eb);
+}
+
+.removeImageBtn {
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  background-color: #ef4444;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  padding: 0;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  transition: background-color 0.2s;
+}
+
+.removeImageBtn:hover {
+  background-color: #dc2626;
+}
+
+
+/* BOTTOM ACTION BUTTONS */
+.formActions {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--spacing-md);
+  margin-top: var(--spacing-lg);
+}
+
+/* SUBMIT EFFECT COMPONENTS STYLES */
+.submitButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background-color: var(--color-primary, #4f46e5);
+  color: white;
+  padding: 0.625rem 1.25rem;
+  border: none;
+  border-radius: 6px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  width: 100%;
+}
+
+.submitButton:hover {
+  background-color: #4338ca;
+}
+
+.submitButton:disabled {
+  background-color: #9ca3af;
+  cursor: not-allowed;
+}
+
+.successMessage {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background-color: #dcfce7;
+  color: #166534;
+  padding: 0.75rem;
+  border-radius: 6px;
+  margin-bottom: 1rem;
+}
+
+.successMessage svg {
+  color: #16a34a;
+}
+

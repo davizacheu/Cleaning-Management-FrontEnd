@@ -1,0 +1,45 @@
+/* components/LoginPanel/LoginPanel.css */
+.login-panel {
+  position: fixed;
+  top: 0;
+  right: -350px;
+  width: 350px;
+  height: 100vh;
+  background-color: white;
+  box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
+  transition: right 0.3s ease;
+  z-index: 1001;
+  overflow-y: auto;
+}
+
+.login-panel.open {
+  right: 0;
+}
+
+.login-panel-content {
+  padding: var(--spacing-xl);
+}
+
+.login-panel-content h2 {
+  margin-bottom: var(--spacing-lg);
+  color: var(--color-text);
+}
+
+.close-login-panel{
+  position: absolute;
+  top: 15px;
+  right: 15px;
+}
+
+.login-panel-content .form-group input {
+  background-color: var(--color-background);
+  border-color: var(--color-border);
+}
+
+.error-message {
+  background-color: #fee2e2;
+  color: #b91c1c;
+  padding: 10px;
+  border-radius: var(--radius-sm);
+  margin-bottom: var(--spacing-md);
+}

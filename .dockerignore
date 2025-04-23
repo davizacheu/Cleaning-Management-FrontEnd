@@ -1,0 +1,25 @@
+# Ignore node modules directory
+node_modules
+
+# Ignore build output (adjust if your build output folder differs)
+dist
+
+# Ignore version control files and directories
+.git
+.gitignore
+
+# Optionally, ignore configuration files that are not needed in the container
+.env.development
+
+# Ignore Dockerfile if you don't need to copy it inside the image
+Dockerfile
+
+# Ignore logs and temporary files
+npm-debug.log
+
+# misc
+.DS_Store
+.env.local
+.env.*.local
+*.log*
+deploy.sh
