@@ -1,6 +1,5 @@
 /* Base styles */
 .container {
-  padding: 20px;
   width: 100%;
   max-width: 1400px;
   margin: 0 auto;
@@ -182,17 +181,20 @@
   padding: 16px;
   border-top: 1px solid #eaeef2;
   display: flex;
+  justify-content: space-between;
   gap: 12px;
 }
 
-.settingsWrapper {
-  position: relative;
-  /*width: 100%;*/
+.sidebarHeader .backButton {
+  width: auto;
+  min-width: 120px;
+  flex-grow: 0;
 }
 
 .settingsButton {
   display: flex;
   align-items: center;
+  justify-content: center;
   width: 100%;
   padding: 10px 12px;
   background-color: transparent;
@@ -204,37 +206,43 @@
   transition: all 0.2s ease;
 }
 
+.settingsButton svg {
+  font-size: 1.0rem;
+}
+
 .settingsButton:hover {
   background-color: #f1f5f9;
   color: #4a90e2;
 }
 
-.settingsButton svg {
-  margin-right: 8px;
+.settingsWrapper {
+  position: relative;
+  width: auto;
 }
 
 .settingsDropdown {
   position: absolute;
   top: calc(100% + 4px);
-  left: 0;
-  width: 100%;
+  right: 0; /* Align to right instead of left */
+  width: 180px; /* Fixed width instead of 100% */
   background-color: white;
-  border-radius: 4px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  border-radius: 6px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15); /* Enhanced shadow */
   z-index: 10;
   overflow: hidden;
+  border: 1px solid #e2e8f0;
 }
 
 .settingsItem {
   display: flex;
   align-items: center;
   width: 100%;
-  padding: 10px 16px;
+  padding: 12px 16px; /* Increased padding */
   background: transparent;
   border: none;
   text-align: left;
   color: #334155;
-  font-size: 0.9rem;
+  font-size: 0.95rem; /* Slightly larger font */
   cursor: pointer;
   transition: background-color 0.2s ease;
 }
@@ -244,8 +252,10 @@
 }
 
 .settingsItem svg {
-  margin-right: 8px;
-  width: 14px;
+  margin-right: 10px; /* Slightly more spacing */
+  font-size: 0.95rem; /* Make icon size match text */
+  width: auto; /* Let the icon size naturally */
+  min-width: 16px; /* Ensure minimum width */
 }
 
 .deleteItem {

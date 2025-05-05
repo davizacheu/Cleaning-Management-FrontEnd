@@ -90,7 +90,6 @@ const RolePage = () => {
           <div className={styles.sidebar}>
 
             <div className={styles.sidebarHeader}>
-
               <button className={styles.backButton} onClick={handleGoBack}>
                 <FontAwesomeIcon icon={faArrowLeft} />
                 <span>Dashboard</span>
