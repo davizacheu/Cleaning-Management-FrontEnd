@@ -1,12 +1,11 @@
-// AddRequestModal.jsx - updated code
+// add-order-modal.jsx - updated code
 import React, {useEffect, useState} from 'react';
-import {useMutation, useQueryClient} from '@tanstack/react-query';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faTimes, faUpload} from '@fortawesome/free-solid-svg-icons';
-import {useAuth} from '../../hook/useAuthHook.js';
-import styles from './AddRequestModal.module.css';
+import styles from './add-order-modal.module.css';
+import {useAddOrderMutation} from "../../hook/use-add-user-order.js";
 
-const AddRequestModal = ({isOpen, onClose}) => {
+const AddOrderModal = ({isOpen, onClose}) => {
     const [formData, setFormData] = useState({
         name: '',
         description: '',
@@ -18,23 +17,21 @@ const AddRequestModal = ({isOpen, onClose}) => {
     });
     const [iconPreviewUrl, setIconPreviewUrl] = useState(null);
     const [validationErrors, setValidationErrors] = useState({});
-    const {addRequest} = useAuth();
-    const queryClient = useQueryClient();
 
-    const addRequestMutation = useMutation({
-        mutationFn: addRequest,
-        onSuccess: () => {
-            queryClient.invalidateQueries({queryKey: ['userRequests']});
-            onClose();
-            resetForm();
-        },
-        onError: (error) => {
-            console.error('Failed to add request:', error);
-            setValidationErrors({
-                form: 'Failed to create request. Please try again.'
-            });
+    const addOrderMutation = useAddOrderMutation(
+        {
+            onSuccess: () => {
+                onClose();
+                resetForm();
+            },
+            onError: (error) => {
+                console.error('Failed to add order:', error);
+                setValidationErrors({
+                    form: 'Failed to create order. Please try again.'
+                });
+            }
         }
-    });
+    )
 
     const resetForm = () => {
         setFormData({
@@ -130,7 +127,7 @@ const AddRequestModal = ({isOpen, onClose}) => {
             contractorName: formData.contractorName || null
         };
 
-        addRequestMutation.mutate(newRequest);
+        addOrderMutation.mutate(newRequest);
     };
 
     // Button should be disabled if required fields are not provided
@@ -338,4 +335,4 @@ const AddRequestModal = ({isOpen, onClose}) => {
     );
 };
 
-export default AddRequestModal;
+export default AddOrderModal;

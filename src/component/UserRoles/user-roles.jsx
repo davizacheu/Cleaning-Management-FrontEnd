@@ -1,32 +1,29 @@
 import React, { useState } from 'react';
-import { useQuery } from '@tanstack/react-query';
+import { useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBuilding, faPlus } from '@fortawesome/free-solid-svg-icons';
-import { useAuth } from '../../hook/useAuthHook.js';
+import {
+    faBuilding,
+    faPlus
+} from '@fortawesome/free-solid-svg-icons';
+
+import { useAllUserRoles } from './use-all-user-roles.js';
 import AddRoleModal from '../AddRoleModal/AddRoleModal.jsx';
 import styles from './UserRoles.module.css';
 
-
 const UserRoles = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const { getUserRoles, isAuthenticated } = useAuth();
-
-    const {
-        data: userRoles = [],
-        isLoading,
-        error
-    } = useQuery({
-        queryKey: ['userRoles'],
-        queryFn: getUserRoles,
-        enabled: isAuthenticated,
-        staleTime: Infinity,
-        refetchOnWindowFocus: false,
-        retry: 1,
-    });
+    const navigate = useNavigate();
+    const { data: userRoles = [], isLoading, error } = useAllUserRoles();
 
     const handleAddRole = () => {
         setIsModalOpen(true);
     };
+
+    const handleRoleClick = (role) => {
+        console.log('Role clicked:', role);
+        navigate(`/role/${role.id}`, { state: { role } });
+    };
+
 
     if (isLoading) {
         return <div className={styles.loading}>Loading roles...</div>;
@@ -40,13 +37,16 @@ const UserRoles = () => {
         );
     }
 
-
     return (
         <div className={styles.rolesSection}>
             <h3 className={styles.sectionTitle}>Your Roles</h3>
             <div className={styles.rolesGrid}>
                 {userRoles.map((role) => (
-                    <div className={styles.roleBox} key={role.id}>
+                    <div 
+                        className={styles.roleBox} 
+                        key={role.id}
+                        onClick={() => handleRoleClick(role)}
+                    >
                         <div className={styles.roleHeader}>
                             {role.profile_pic ? (
                                 <img

@@ -1,60 +1,83 @@
+
 // src/component/LoginPanel.jsx
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../../hook/useAuthHook.js';
-import { validateUsername, validatePassword } from '../../utils/user_validation_utils.js';
+import React, { useEffect, useRef } from 'react';
+import { useAuthProvider } from '../../hook/use-auth-provider.js';
 import './LoginPanel.css';
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faTimes} from "@fortawesome/free-solid-svg-icons"; // Import the component-specific CSS
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTimes } from "@fortawesome/free-solid-svg-icons";
+import {
+  faGoogle,
+  faApple,
+  faGithub,
+  faFacebook
+} from '@fortawesome/free-brands-svg-icons';
 
 const LoginPanel = ({ isOpen, onClose }) => {
-  const navigate = useNavigate(); // Add this hook for navigation
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const [errors, setErrors] = useState({});
-  const [isSubmitting, setIsSubmitting] = useState(false);
+  const { signInWithProvider, error: authError } = useAuthProvider();
+  const scrollPositionRef = useRef(0);
+  const scrollbarWidthRef = useRef(0);
 
-  const { login, error: authError } = useAuth();
+  // Effect to disable scrolling when the panel is open
+  useEffect(() => {
+    if (isOpen) {
+      // Calculate scrollbar width by comparing window inner width to document client width
+      scrollbarWidthRef.current = window.innerWidth - document.documentElement.clientWidth;
 
-  const validateForm = () => {
-    const newErrors = {};
-    const usernameError = validateUsername(username);
-    const passwordError = validatePassword(password);
+      // Store the current scroll position before freezing
+      scrollPositionRef.current = window.scrollY;
 
-    if (usernameError) newErrors.username = usernameError;
-    if (passwordError) newErrors.password = passwordError;
+      // Add padding to the right of the body to prevent content shift
+      document.body.style.paddingRight = `${scrollbarWidthRef.current}px`;
 
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
+      // Apply the scroll lock styles
+      document.body.style.top = `-${scrollPositionRef.current}px`;
+      document.body.classList.add('login-panel-open');
+    } else {
+      // Remove the scroll lock styles
+      document.body.classList.remove('login-panel-open');
+
+      // Remove the padding
+      document.body.style.paddingRight = '';
+
+      // Restore the scroll position
+      window.scrollTo(0, scrollPositionRef.current);
+      document.body.style.top = '';
+    }
+
+    // Cleanup function
+    return () => {
+      if (document.body.classList.contains('login-panel-open')) {
+        document.body.classList.remove('login-panel-open');
+        document.body.style.paddingRight = '';
+        window.scrollTo(0, scrollPositionRef.current);
+        document.body.style.top = '';
+      }
+    };
+  }, [isOpen]);
+
+  const handleGoogleSignIn = () => {
+    try {
+      signInWithProvider('google');
+    } catch (error) {
+      console.error("Google login exception:", error);
+    }
   };
 
-  const handleLoginSubmit = async (e) => {
-    e.preventDefault();
-    console.log("Form submission started");
 
-    if (!validateForm()) {
-      console.log("Form validation failed");
-      return;
-    }
+  // These would need implementation in AuthProvider
+  const handleAppleSignIn = () => {
+    console.log("Apple sign in not implemented yet");
+    // Future implementation
+  };
 
-    setIsSubmitting(true);
-    try {
-      console.log(`Attempting login with username: ${username}`);
-      await login(username, password);
-      console.log("Login successful, clearing form");
-      setUsername('');
-      setPassword('');
-      onClose();
-      console.log("About to navigate to dashboard...");
-      navigate('/dashboard');
-      console.log("Navigation called");
+  const handleGithubSignIn = () => {
+    console.log("GitHub sign in not implemented yet");
+    // Future implementation
+  };
 
-    } catch (error) {
-      console.error("Login exception:", error);
-    } finally {
-      setIsSubmitting(false);
-      console.log("Login submission finished");
-    }
+  const handleFacebookSignIn = () => {
+    console.log("Facebook sign in not implemented yet");
+    // Future implementation
   };
 
   return (
@@ -63,41 +86,48 @@ const LoginPanel = ({ isOpen, onClose }) => {
           <FontAwesomeIcon icon={faTimes} />
         </button>
         <div className="login-panel-content">
-          <h2>Login to CleanMaster</h2>
+          <h2>Sign In / Up</h2>
           {authError && <div className="error-message">{authError}</div>}
-          <form onSubmit={handleLoginSubmit}>
-            <div className="form-group">
-              <label htmlFor="username">Username</label>
-              <input
-                  type="text"
-                  id="username"
-                  name="username"
-                  value={username}
-                  onChange={(e) => setUsername(e.target.value)}
-                  required
-              />
-              {errors.username && <div className="field-error">{errors.username}</div>}
-            </div>
-            <div className="form-group">
-              <label htmlFor="password">Password</label>
-              <input
-                  type="password"
-                  id="password"
-                  name="password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  required
-              />
-              {errors.password && <div className="field-error">{errors.password}</div>}
-            </div>
+
+          <div className="social-login-container">
+            <p className="login-subtitle">Choose a sign in method</p>
+
             <button
-                type="submit"
-                className="btn btn-primary"
-                disabled={isSubmitting}
+                className="social-login-btn google-btn"
+                onClick={handleGoogleSignIn}
             >
-              {isSubmitting ? 'Logging in...' : 'Login'}
+              <FontAwesomeIcon icon={faGoogle} />
+              <span>Continue with Google</span>
             </button>
-          </form>
+
+            <button
+                className="social-login-btn apple-btn"
+                onClick={handleAppleSignIn}
+            >
+              <FontAwesomeIcon icon={faApple} />
+              <span>Continue with Apple</span>
+            </button>
+
+            <button
+                className="social-login-btn github-btn"
+                onClick={handleGithubSignIn}
+            >
+              <FontAwesomeIcon icon={faGithub} />
+              <span>Continue with GitHub</span>
+            </button>
+
+            <button
+                className="social-login-btn facebook-btn"
+                onClick={handleFacebookSignIn}
+            >
+              <FontAwesomeIcon icon={faFacebook} />
+              <span>Continue with Facebook</span>
+            </button>
+          </div>
+
+          <p className="login-terms">
+            By continuing, you agree to CleanMaster's Terms of Service and Privacy Policy.
+          </p>
         </div>
       </div>
   );

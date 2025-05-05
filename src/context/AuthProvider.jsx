@@ -1,123 +1,107 @@
-// AuthProvider.jsx
-import React, {useState} from 'react';
-import {userService} from '../model/service/userService.js';
-import {AuthContext} from "./AuthContext.jsx";
+// src/context/AuthProvider.jsx
+import React, {useEffect, useState} from 'react';
+import { AuthContext } from "./AuthContext.tsx";
+import {supabase} from "../model/net/supabase-client.js";
+import {useNavigate} from 'react-router-dom';
 
 const AuthProvider = ({ children }) => {
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
+    // Add console.log at the beginning of the component body
+    console.log('AuthProvider rendering');
+    const navigate = useNavigate();
 
-  const login = async (username, password) => {
-    try {
-      setError(null);
-      setLoading(true);
+    const [user, setUser] = useState(null);
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState(null);
+    const [initializing, setInitializing] = useState(true);
 
-      // Make API call and get response with token
-      await userService.login(username, password);
+    useEffect(() => {
+        console.log('AuthProvider useEffect');
+        // Initialize authentication state
+        console.log('Getting session');
+        supabase.auth.getSession().then(
+            ({ data: { session } }) => {
+                console.log('Get session user', session?.user ?? null);
+                setUser(session?.user ?? null);
+            }
+        ).catch(
+            err => {
+                console.error("Error initializing auth:", err);
+                setError(err.message || "Failed to initialize authentication");
+            }
+        ).finally(
+            () => {
+                console.log('Set initializing to false in AuthProvider.js useEffect');
+                setInitializing(false);
+            }
+        );
 
-    } catch (err) {
-      console.error("Login error:", err);
-      setError(err.message || 'Failed to login');
-      throw err;
+        console.log('Creating auth state change listener');
+        const { data: listener } = supabase.auth.onAuthStateChange(
+            (event, session) => {
+                console.log('Auth state change event', event);
+                setUser(session?.user ?? null);
+                console.log('Auth state change user', session?.user ?? null);
+                if (event === 'SIGNED_IN') {
+                    navigate('/dashboard');
+                }
+                if (event === 'SIGNED_OUT') {
+                    navigate('/');
+                }
+            }
+        );
 
-    } finally {
-      setLoading(false);
-    }
-  };
+        return () => {
+            console.log('AuthProvider useEffect cleanup');
+            listener.subscription.unsubscribe();
+        };
+    }, [navigate]);
 
-  const logout = () => {
-      setError(null);
-      setLoading(true);
-      userService.logout().catch(
-          (err) => {
-            console.error("Logout error:", err);
+    const signInWithProvider = async (provider) => {
+        setLoading(true);
+        setError(null);
+
+        try {
+            await supabase.auth.signInWithOAuth({
+                provider: provider,
+            });
+        } catch (err) {
+            console.error(`${provider} login error:`, err);
+            setError(err.message || 'Failed to login');
+            throw err;
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    const signOut = async () => {
+        setLoading(true);
+        try {
+            await supabase.auth.signOut();
+        } catch (err) {
             setError(err.message || 'Failed to logout');
             throw err;
-          }).finally(() => {
-        setLoading(false);
-      })
+        } finally {
+            setLoading(false);
+        }
+    };
 
-  };
+    const isAuthenticated = () => {
+        return user !== null;
+    };
 
-  // Function to fetch user roles with the token
-  const getUserRoles = async () => {
-    try {
-      setLoading(true);
-        // This will return objects of type {id, company_name, title, profile_pic}
-        return await userService.getUserRoles();
-    } catch (err) {
-      console.error("Error fetching user roles:", err);
-      setError(err.message || "Failed to load user roles");
-      throw err;
-
-    } finally {
-      setLoading(false);
-    }
-  };
-
-
-// Function to fetch user requests
-  const getUserOrders = async () => {
-    try {
-      setLoading(true);
-      // Fetch user requests using userService
-      return await userService.getUserOrders();
-    } catch (err) {
-      console.error("Error fetching user requests:", err);
-      setError(err.message || "Failed to fetch user requests");
-      throw err;
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  // Modified addUserRole function for AuthProvider.jsx
-  const addNewCompany = async (companyData) => {
-    try {
-      setLoading(true);
-      // Use the proper implementation from userService
-      return await userService.addNewCompany(companyData);
-    } catch (err) {
-      console.error("Error adding user role:", err);
-      setError(err.message || "Failed to add role");
-      throw err;
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const joinCompany = async (roleId) => {
-      try {
-        setLoading(true);
-        return await userService.joinCompany(roleId);
-      } catch (err) {
-        console.error("Error joining company:", err);
-        setError(err.message || "Failed to join company");
-        throw err;
-      } finally {
-        setLoading(false);
-      }
-  };
-
-  const isAuthenticated = () => {
-    return !!localStorage.getItem('auth_token');
-  };
-
-  return (
-      <AuthContext.Provider value={{
-        isAuthenticated: isAuthenticated,
-        getUserRoles,
-        getUserOrders,
-        addNewCompany,
-        joinCompany,
-        login,
-        logout,
-        loading,
-        error
-      }}>
-        {children}
-      </AuthContext.Provider>
-  );
+    return (
+        <AuthContext.Provider value={{
+            user,
+            loading,
+            error,
+            initializing,
+            signInWithProvider,
+            signOut,
+            isAuthenticated,
+        }}>
+            {children}
+        </AuthContext.Provider>
+    );
 };
 
 export default AuthProvider;

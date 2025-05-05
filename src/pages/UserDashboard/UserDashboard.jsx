@@ -1,29 +1,24 @@
-import React, { useState } from 'react';
 import './UserDashboard.css'; // Import dashboard-specific styles
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCalendarCheck, faHistory } from '@fortawesome/free-solid-svg-icons';
-import UserRoles from '../../component/UserRoles/UserRoles.jsx';
-import UserRequests from "../../component/UserRequests/UserRequests.jsx";
+import UserRoles from '../../component/UserRoles/user-roles.jsx';
+import UserOrders from "../../component/user-orders/user-orders.jsx";
 
 const UserDashboard = () => {
-    const [userData] = useState({
-        username: 'Dev User' // Default value
-    });
-
 
     return (
         <div className="container">
             <div className="dashboard-container">
-                <h1 className="dashboard-title">Welcome to your Dashboard</h1>
-                <div className="user-info">
-                    <h2>Welcome, {userData.username}</h2>
-                </div>
+                <h1 className="dashboard-title">Dashboard</h1>
+                {/*<div className="user-info">*/}
+                {/*    <h2>Dashboard</h2>*/}
+                {/*</div>*/}
 
-                {/* User Roles Component */}
+                {/*/!* User Roles Component *!/*/}
                 <UserRoles />
 
-                {/*User Requests Component*/}
-                <UserRequests/>
+                {/*/!*User Requests Component*!/*/}
+                <UserOrders/>
 
                 <div className="dashboard-content">
                     <div className="dashboard-card">

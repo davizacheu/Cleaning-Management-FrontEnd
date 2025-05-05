@@ -1,35 +1,29 @@
+
 // Modified Header.jsx - Better approach
 import React, { useState, useRef, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { useAuth } from '../../hook/useAuthHook.js';
+import { useAuthProvider } from '../../hook/use-auth-provider.js';
 import cleaningIcon from '../../assets/cleaning-icon.svg';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser, faCog, faSignOutAlt, faTachometerAlt } from '@fortawesome/free-solid-svg-icons';
+import LoginPanel from '../LoginPanel/LoginPanel.jsx';
 import './Header.css';
 
-const Header = ({ onLoginClick }) => {
-  const { isAuthenticated, logout } = useAuth();
+const Header = () => {
+  const { user, signOut, initializing } = useAuthProvider();
   const navigate = useNavigate();
   const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [loginPanelOpen, setLoginPanelOpen] = useState(false);
   const dropdownRef = useRef(null);
-  const authStatus = isAuthenticated(); // Store the result in a variable
-
 
   const handleLoginClick = (e) => {
     e.preventDefault();
-    onLoginClick(e);
+    setLoginPanelOpen(true);
   };
 
-  const handleLogout = () => {
-    logout();
-    navigate('/');
+  const handleLogout =  () => {
+    signOut();
   };
-
-  // Reset dropdown state when auth status changes
-  useEffect(() => {
-    setDropdownOpen(false);
-  }, [authStatus]);
-
 
   // Close dropdown when clicking outside
   useEffect(() => {
@@ -51,14 +45,17 @@ const Header = ({ onLoginClick }) => {
   };
 
   return (
-      <header className="header">
+      <nav className="header">
         <div className="header-content">
+
           <div className="logo-container">
-            <img src={cleaningIcon} alt="CleanMaster Logo" className="brand-logo" />
-            <h1>CleanMaster</h1>
+            <Link to="/">
+              <img src={cleaningIcon} alt="CleanMaster Logo" className="brand-logo" />
+              <h1>CleanMaster</h1>
+            </Link>
           </div>
 
-          <div className="nav-links">
+          <div className="main-nav">
             <ul>
               <li><Link to="/" className="active">Home</Link></li>
               <li><Link to="/services">Services</Link></li>
@@ -66,43 +63,58 @@ const Header = ({ onLoginClick }) => {
             </ul>
           </div>
 
-          <nav className="nav">
-            <ul>
-              {isAuthenticated() ? (
-                  <li className="user-dropdown" ref={dropdownRef}>
-                    <button
-                        className="user-icon-btn"
-                        onClick={toggleDropdown}
-                        aria-expanded={dropdownOpen}
-                    >
-                      <FontAwesomeIcon icon={faUser} />
-                    </button>
-                    {dropdownOpen && (
-                        <div className="dropdown-menu">
-                          <Link to="/dashboard" onClick={() => setDropdownOpen(false)}>
-                            <FontAwesomeIcon icon={faTachometerAlt} /> Dashboard
-                          </Link>
-                          <Link to="/settings" onClick={() => setDropdownOpen(false)}>
-                            <FontAwesomeIcon icon={faCog} /> Settings
-                          </Link>
-                          <div className="dropdown-link" onClick={handleLogout}>
-                            <FontAwesomeIcon icon={faSignOutAlt} /> Logout
-                          </div>
-                        </div>
-                    )}
-                  </li>
-              ) : (
-                  <li>
-                    <button className="btn btn-primary" onClick={handleLoginClick}>
-                      Login
-                    </button>
-
-                  </li>
-              )}
-            </ul>
-          </nav>
+          <div className="auth-nav">
+            {!initializing ?
+                (<ul>
+                      {user ? (
+                          <li className="user-dropdown" ref={dropdownRef}>
+                            <button
+                                className="user-icon-btn"
+                                onClick={toggleDropdown}
+                                aria-expanded={dropdownOpen}
+                            >
+                              <FontAwesomeIcon icon={faUser} />
+                            </button>
+                            {dropdownOpen && (
+                                <div className="dropdown-menu">
+                                  <div className="dropdown-item">
+                                    <Link to="/dashboard" onClick={() => setDropdownOpen(false)}>
+                                      <FontAwesomeIcon icon={faTachometerAlt} /> Dashboard
+                                    </Link>
+                                  </div>
+                                  <div className="dropdown-item">
+                                    <Link to="/settings" onClick={() => setDropdownOpen(false)}>
+                                      <FontAwesomeIcon icon={faCog} /> Settings
+                                    </Link>
+                                  </div>
+                                  <div className="dropdown-item">
+                                    <button className="dropdown-link" onClick={handleLogout}>
+                                      <FontAwesomeIcon icon={faSignOutAlt} /> Logout
+                                    </button>
+                                  </div>
+                                </div>
+                            )}
+                          </li>
+                      ) : (
+                          <li>
+                            <button className="btn btn-primary" onClick={handleLoginClick}>
+                              Sign In / Up
+                            </button>
+                          </li>
+                      )}
+                    </ul>
+                ) : (
+                    <></>
+                )}
+          </div>
         </div>
-      </header>
+
+        {/* Login Panel */}
+        <LoginPanel
+            isOpen={loginPanelOpen}
+            onClose={() => setLoginPanelOpen(false)}
+        />
+      </nav>
   );
 };
 

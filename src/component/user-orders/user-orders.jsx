@@ -1,5 +1,5 @@
+// src/component/UserOrders/user-orders.jsx
 import React, { useState } from 'react';
-import { useQuery } from '@tanstack/react-query';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
     faBroom,
@@ -8,28 +8,15 @@ import {
     faExclamationTriangle
 } from '@fortawesome/free-solid-svg-icons';
 
-import { useAuth } from '../../hook/useAuthHook.js';
-import AddRequestModal from '../AddRequestModal/AddRequestModal.jsx';
-import styles from './UserRequests.module.css';
+import { useAllUserOrders } from './use-all-user-orders.js';
+import AddOrderModal from '../add-order-modal/add-order-modal.jsx';
+import styles from './user-orders.module.css';
 
-const UserRequests = () => {
+const UserOrders = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const { getUserOrders, isAuthenticated } = useAuth();
+    const { data: userOrders = [], isLoading, error } = useAllUserOrders();
 
-    const {
-        data: userRequests = [],
-        isLoading,
-        error
-    } = useQuery({
-        queryKey: ['userRequests'],
-        queryFn: getUserOrders,
-        enabled: isAuthenticated,
-        staleTime: Infinity,
-        refetchOnWindowFocus: false,
-        retry: 1,
-    });
-
-    const handleAddRequest = () => {
+    const handleAddOrder = () => {
         setIsModalOpen(true);
     };
 
@@ -46,17 +33,16 @@ const UserRequests = () => {
     }
 
     return (
-        // Continue changing all className references to use the styles object
         <div className={styles.requestsSection}>
             <h3 className={styles.sectionTitle}>Your Cleaning Requests</h3>
             <div className={styles.requestsGrid}>
-                {userRequests.map((request) => (
-                    <div className={styles.requestBox} key={request.id}>
+                {userOrders.map((order) => (
+                    <div className={styles.requestBox} key={order.id}>
                         <div className={styles.requestHeader}>
-                            {request.icon ? (
+                            {order.icon ? (
                                 <img
-                                    src={request.request_icon}
-                                    alt={`${request.name} icon`}
+                                    src={order.request_icon}
+                                    alt={`${order.name} icon`}
                                     className={styles.requestLogo}
                                 />
                             ) : (
@@ -64,15 +50,15 @@ const UserRequests = () => {
                                     <FontAwesomeIcon icon={faBroom} />
                                 </div>
                             )}
-                            <h4 className={styles.requestName}>{request.name}</h4>
+                            <h4 className={styles.requestName}>{order.name}</h4>
                         </div>
                         <div className={styles.requestContent}>
-                            {request.contractor ? (
+                            {order.contractor ? (
                                 <div className={styles.contractorInfo}>
-                                    {request.contractor_logo ? (
+                                    {order.contractor_logo ? (
                                         <img
-                                            src={request.contractor_logo}
-                                            alt={`${request.contractor} logo`}
+                                            src={order.contractor_logo}
+                                            alt={`${order.contractor} logo`}
                                             className={styles.contractorLogo}
                                         />
                                     ) : (
@@ -80,7 +66,7 @@ const UserRequests = () => {
                                             <FontAwesomeIcon icon={faBuilding} />
                                         </div>
                                     )}
-                                    <span className={styles.contractorName}>{request.contractor}</span>
+                                    <span className={styles.contractorName}>{order.contractor}</span>
                                 </div>
                             ) : (
                                 <div className={styles.noContractorWarning}>
@@ -93,7 +79,7 @@ const UserRequests = () => {
                 ))}
 
                 {/* Add Request Box */}
-                <div className={`${styles.requestBox} ${styles.addRequestBox}`} onClick={handleAddRequest}>
+                <div className={`${styles.requestBox} ${styles.addRequestBox}`} onClick={handleAddOrder}>
                     <div className={styles.addRequestContent}>
                         <div className={styles.addRequestIcon}>
                             <FontAwesomeIcon icon={faPlus} />
@@ -103,7 +89,7 @@ const UserRequests = () => {
                 </div>
             </div>
 
-            <AddRequestModal
+            <AddOrderModal
                 isOpen={isModalOpen}
                 onClose={() => setIsModalOpen(false)}
             />
@@ -111,4 +97,4 @@ const UserRequests = () => {
     );
 };
 
-export default UserRequests;
+export default UserOrders;

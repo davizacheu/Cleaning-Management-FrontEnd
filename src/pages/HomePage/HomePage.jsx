@@ -5,6 +5,7 @@ import Testimonials from './Testimonials.jsx';
 import scheduleIcon from "../../assets/schedule-icon.svg";
 import communicationIcon from "../../assets/communication-icon.svg";
 import analyticsIcon from "../../assets/analytics-icon.svg";
+import CTASection from "../../component/CTASection/CTASection.jsx";
 
 const HomePage = () => {
   return (
@@ -60,11 +61,16 @@ const HomePage = () => {
         </div>
       </section>
 
-      {/* Add this divider */}
-      <div className="section-divider"></div>
-
-
       <Testimonials />
+
+      <CTASection
+          title="Transform Your Cleaning Business Today"
+          description="Join over 500 cleaning teams already using CleanMaster to optimize their operations and boost customer satisfaction."
+          buttonText="Start Your Free Trial"
+          secondaryButtonText="Book a Demo"
+          secondaryButtonLink="/demo"
+          backgroundClass="gradientBg"
+      />
     </>
   );
 };

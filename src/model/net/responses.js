@@ -1,4 +1,3 @@
-
 // Instead of LoginResponse class:
 export const handleLoginResponse = (response) => {
     // Store token if present
@@ -20,7 +19,7 @@ export const handleUserRolesResponse = (response) => {
         if (!roleData.company) throw new ResponseError('User role entry invalid: missing company object');
         if (!roleData.role) throw new ResponseError('User role entry invalid: missing role object');
 
-        const { company, role } = roleData;
+        const {company, role} = roleData;
         const missingCompanyFields = [];
         const missingRoleFields = [];
 
@@ -68,7 +67,7 @@ export const handleUserOrdersResponse = (response) => {
         // Validate each order entry has order object
         if (!orderData.order) throw new ResponseError('User order entry invalid: missing order object');
 
-        const { company, order } = orderData;
+        const {company, order} = orderData;
         const missingOrderFields = [];
 
         // Validate required order fields
@@ -99,9 +98,14 @@ export const handleUserOrdersResponse = (response) => {
     });
 };
 
+export const handleRoleDataResponse = (response) => {
+
+};
+
 class ResponseError extends Error {
     constructor(message) {
         super(message);
         this.name = 'ResponseError: ';
     }
 }
+

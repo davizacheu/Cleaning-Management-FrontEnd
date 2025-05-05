@@ -9,7 +9,7 @@ dist
 .gitignore
 
 # Optionally, ignore configuration files that are not needed in the container
-.env.development
+.env
 
 # Ignore Dockerfile if you don't need to copy it inside the image
 Dockerfile

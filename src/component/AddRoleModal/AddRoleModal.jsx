@@ -2,13 +2,11 @@
 import React, {useEffect, useState} from 'react';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faTimes, faUpload, faBuilding, faIdCard, faLink, faSpinner, faCheckCircle} from '@fortawesome/free-solid-svg-icons';
-import {useMutation, useQueryClient} from '@tanstack/react-query';
-import {useAuth} from '../../hook/useAuthHook.js';
 import styles from './AddRoleModal.module.css';
+import {useAddNewCompanyMutation} from "../../hook/use-add-new-company.js";
+import {useJoinCompanyMutation} from "../../hook/use-join-company.js";
 
 const AddRoleModal = ({isOpen, onClose}) => {
-    const {addNewCompany, joinCompany} = useAuth();
-    const queryClient = useQueryClient();
     const [roleType, setRoleType] = useState('existing');
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [submitSuccess, setSubmitSuccess] = useState(false);
@@ -58,52 +56,46 @@ const AddRoleModal = ({isOpen, onClose}) => {
         setPreviewUrl(null);
     };
 
+    const onMutate = () => {
+        // Set loading state when mutation starts
+        setIsSubmitting(true);
+    }
+
+    const onError = (error) => {
+        setIsSubmitting(false);
+        console.error("Error adding role:", error);
+    }
+
+    const onSuccess = () => {
+        // Show success message
+        setIsSubmitting(false);
+        setSubmitSuccess(true);
+        resetForm();
+        // Reset success message after a delay
+        setTimeout(() => {
+            setSubmitSuccess(false);
+        }, 3000);
+    }
+
     // Use React Query mutation for adding new role
-    const addNewCompanyMutation = useMutation({
-        mutationFn: addNewCompany,
-        onMutate: () => {
-            // Set loading state when mutation starts
-            setIsSubmitting(true);
-        },
-        onSuccess: () => {
-            // Show success message
-            setIsSubmitting(false);
-            setSubmitSuccess(true);
-            resetForm();
-            // Invalidate and refetch the roles query to update UI
-            queryClient.invalidateQueries(['userRoles']);
-            // Reset success message after a delay
-            setTimeout(() => {
-                setSubmitSuccess(false);
-            }, 3000);
-        },
-        onError: (error) => {
-            setIsSubmitting(false);
-            console.error("Error adding role:", error);
+    const addNewCompanyMutation = useAddNewCompanyMutation({
+        newCompanyData: newCompanyData,
+        options: {
+            onMutate,
+            onError,
+            onSuccess
         }
     });
-
 
     // Use React Query mutation for joining existing role
-    const joinCompanyMutation = useMutation({
-        mutationFn: joinCompany,
-        onMutate: () => {
-            setIsSubmitting(true);
-        },
-        onSuccess: () => {
-            setIsSubmitting(false);
-            setSubmitSuccess(true);
-            resetForm();
-            queryClient.invalidateQueries(['userRoles']);
-            setTimeout(() => {
-                setSubmitSuccess(false);
-            }, 3000);
-        },
-        onError: (error) => {
-            setIsSubmitting(false);
-            console.error("Error joining role:", error);
-        }
-    });
+    const joinCompanyMutation = useJoinCompanyMutation({
+        roleId: roleId,
+        options: {
+        onMutate,
+        onError,
+        onSuccess
+    }
+    })
 
     const handleModalClose = () => {
         // Only close if not currently submitting
