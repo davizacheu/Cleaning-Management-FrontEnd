@@ -9,6 +9,7 @@ import Footer from "./component/Footer/Footer.jsx";
 import ProtectedLayout from "./pages/ProtectedLayout.jsx";
 
 function App() {
+    console.log("Rendering App");
 
     return (
         <div className="app-container">

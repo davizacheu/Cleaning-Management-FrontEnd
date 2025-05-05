@@ -16,6 +16,7 @@ import styles from './RolePage.module.css';
 import { useGetRoleInfo } from "./use-get-role-info.js";
 
 const RolePage = () => {
+  console.log("Rendering RolePage");
   const navigate = useNavigate();
   const location = useLocation();
   const [activeTab, setActiveTab] = useState('info');

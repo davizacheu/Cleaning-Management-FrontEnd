@@ -14,7 +14,6 @@ export const orderService = {
       if (error) {
         console.error('Error fetching user orders:', error);
       }
-      console.log('Orders data', data)
       const response = data.map(({ company, ...order }) => ({company, order}))
       return handleUserOrdersResponse(response);
 

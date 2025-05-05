@@ -1,57 +1,49 @@
 // src/context/AuthProvider.jsx
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from "react";
 import { AuthContext } from "./AuthContext.tsx";
-import {supabase} from "../model/net/supabase-client.js";
-import {useNavigate} from 'react-router-dom';
+import { supabase } from "../model/net/supabase-client.js";
+import { useNavigate } from "react-router-dom";
 
 const AuthProvider = ({ children }) => {
-    // Add console.log at the beginning of the component body
-    console.log('AuthProvider rendering');
+    console.log("Rendering AuthProvider");
     const navigate = useNavigate();
-
-    const [user, setUser] = useState(null);
+    const [authenticatedUser, setAuthenticatedUser] = useState(() => {
+        const authtoken = localStorage.getItem(
+            import.meta.env.VITE_SUPABASE_AUTH_TOKEN_KEY
+        );
+        return authtoken ? JSON.parse(authtoken).user : null;
+    });
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
     const [initializing, setInitializing] = useState(true);
 
     useEffect(() => {
-        console.log('AuthProvider useEffect');
-        // Initialize authentication state
-        console.log('Getting session');
-        supabase.auth.getSession().then(
-            ({ data: { session } }) => {
-                console.log('Get session user', session?.user ?? null);
-                setUser(session?.user ?? null);
-            }
-        ).catch(
-            err => {
-                console.error("Error initializing auth:", err);
-                setError(err.message || "Failed to initialize authentication");
-            }
-        ).finally(
-            () => {
-                console.log('Set initializing to false in AuthProvider.js useEffect');
+        console.log("useEffect AuthProvider");
+        supabase.auth
+            .getUser()
+            .then(({ data: { user } }) => {
+                if (!authenticatedUser && user) {
+                    setAuthenticatedUser(user);
+                    navigate("/dashboard");
+                }
+            })
+            .catch((err) => {
+                console.error("Error getting user:", err);
+                setError(err.message || "Failed to get user");
+            })
+            .finally(() => {
                 setInitializing(false);
-            }
-        );
+            });
 
-        console.log('Creating auth state change listener');
         const { data: listener } = supabase.auth.onAuthStateChange(
             (event, session) => {
-                console.log('Auth state change event', event);
-                setUser(session?.user ?? null);
-                console.log('Auth state change user', session?.user ?? null);
-                if (event === 'SIGNED_IN') {
-                    navigate('/dashboard');
-                }
-                if (event === 'SIGNED_OUT') {
-                    navigate('/');
+                setAuthenticatedUser(session?.user ?? null);
+                if (event === "SIGNED_OUT") {
+                    navigate("/");
                 }
             }
         );
-
         return () => {
-            console.log('AuthProvider useEffect cleanup');
             listener.subscription.unsubscribe();
         };
     }, [navigate]);
@@ -66,7 +58,7 @@ const AuthProvider = ({ children }) => {
             });
         } catch (err) {
             console.error(`${provider} login error:`, err);
-            setError(err.message || 'Failed to login');
+            setError(err.message || "Failed to login");
             throw err;
         } finally {
             setLoading(false);
@@ -78,7 +70,7 @@ const AuthProvider = ({ children }) => {
         try {
             await supabase.auth.signOut();
         } catch (err) {
-            setError(err.message || 'Failed to logout');
+            setError(err.message || "Failed to logout");
             throw err;
         } finally {
             setLoading(false);
@@ -86,19 +78,21 @@ const AuthProvider = ({ children }) => {
     };
 
     const isAuthenticated = () => {
-        return user !== null;
+        return authenticatedUser !== null;
     };
 
     return (
-        <AuthContext.Provider value={{
-            user,
-            loading,
-            error,
-            initializing,
-            signInWithProvider,
-            signOut,
-            isAuthenticated,
-        }}>
+        <AuthContext.Provider
+            value={{
+                user: authenticatedUser,
+                loading,
+                error,
+                initializing,
+                signInWithProvider,
+                signOut,
+                isAuthenticated,
+            }}
+        >
             {children}
         </AuthContext.Provider>
     );

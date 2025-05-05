@@ -5,7 +5,6 @@ import {ApiCommunicator} from "../net/apiCommunicator.js";
 
 export const roleService = {
   async getUserRoles(user_id) {
-    console.log("Getting user roles for user_id:", user_id);
     try {
       const {data, error} = await supabase
           .from('roles')
@@ -14,7 +13,6 @@ export const roleService = {
       if (error) {
         console.error('Error fetching user roles:', error);
       }
-      console.log("User roles:", data);
       const response = data.map(({ company, ...role }) => ({ role, company }))
       return handleUserRolesResponse(response);
     } catch (error) {
