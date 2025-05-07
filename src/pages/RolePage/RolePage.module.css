@@ -210,7 +210,7 @@
   font-size: 1.0rem;
 }
 
-.settingsButton:hover {
+.settingsButton:hover, .settingsButton.active {
   background-color: #f1f5f9;
   color: #4a90e2;
 }

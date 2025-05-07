@@ -1,13 +1,11 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {
-    faBuilding,
-    faPlus
-} from '@fortawesome/free-solid-svg-icons';
+import { faPlus } from '@fortawesome/free-solid-svg-icons';
 
 import { useAllUserRoles } from './use-all-user-roles.js';
 import AddRoleModal from '../AddRoleModal/AddRoleModal.jsx';
+import CompanyLogo from '../company-logo/company-logo.jsx';
 import styles from './UserRoles.module.css';
 
 const UserRoles = () => {
@@ -23,7 +21,6 @@ const UserRoles = () => {
         console.log('Role clicked:', role);
         navigate(`/role/${role.id}`, { state: { role } });
     };
-
 
     if (isLoading) {
         return <div className={styles.loading}>Loading roles...</div>;
@@ -48,17 +45,12 @@ const UserRoles = () => {
                         onClick={() => handleRoleClick(role)}
                     >
                         <div className={styles.roleHeader}>
-                            {role.profile_pic ? (
-                                <img
-                                    src={role.profile_pic}
-                                    alt={`${role.company_name} logo`}
-                                    className={styles.companyLogo}
-                                />
-                            ) : (
-                                <div className={styles.companyLogoIcon}>
-                                    <FontAwesomeIcon icon={faBuilding} />
-                                </div>
-                            )}
+                            <CompanyLogo
+                                logoUrl={role.company_logo_url}
+                                companyName={role.company_name}
+                                className={styles.companyLogo}
+                                size="medium"
+                            />
                             <h4 className={styles.companyName}>{role.company_name}</h4>
                         </div>
                         <div className={styles.roleContent}>

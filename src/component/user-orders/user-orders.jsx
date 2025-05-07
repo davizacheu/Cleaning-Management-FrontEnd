@@ -10,6 +10,7 @@ import {
 
 import { useAllUserOrders } from './use-all-user-orders.js';
 import AddOrderModal from '../add-order-modal/add-order-modal.jsx';
+import CompanyLogo from '../company-logo/company-logo.jsx';
 import styles from './user-orders.module.css';
 
 const UserOrders = () => {
@@ -55,17 +56,12 @@ const UserOrders = () => {
                         <div className={styles.requestContent}>
                             {order.contractor ? (
                                 <div className={styles.contractorInfo}>
-                                    {order.contractor_logo ? (
-                                        <img
-                                            src={order.contractor_logo}
-                                            alt={`${order.contractor} logo`}
-                                            className={styles.contractorLogo}
-                                        />
-                                    ) : (
-                                        <div className={styles.contractorLogoDefault}>
-                                            <FontAwesomeIcon icon={faBuilding} />
-                                        </div>
-                                    )}
+                                    <CompanyLogo
+                                        logoUrl={order.contractor_logo}
+                                        companyName={order.contractor}
+                                        className={styles.contractorLogo}
+                                        size="small"
+                                    />
                                     <span className={styles.contractorName}>{order.contractor}</span>
                                 </div>
                             ) : (

@@ -48,7 +48,7 @@ export const handleUserRolesResponse = (response) => {
             company_address: company.address,
             company_email: company.email,
             company_phone: company.phone,
-            company_logo: company.logo_url,
+            company_logo_url: company.logo_url,
             personnel_name: role.personnel_name,
             contact_data: role.contact_data
         };

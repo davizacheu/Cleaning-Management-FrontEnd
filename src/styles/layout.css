@@ -2,6 +2,7 @@
 .app-container {
   width: 100%;
   overflow-x: hidden; /* Prevent horizontal scrolling */
+  user-select: none;
 }
 
 .container {
