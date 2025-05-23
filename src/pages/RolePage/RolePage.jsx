@@ -1,27 +1,23 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faArrowLeft,
-  faEdit,
-  faTrash,
   faBuilding,
   faUserTie,
   faClipboardList,
   faChartLine,
-  faUserShield,
-  faCog
+  faUserShield
 } from '@fortawesome/free-solid-svg-icons';
 import styles from './RolePage.module.css';
 import { useGetRoleInfo } from "./use-get-role-info.js";
+import RoleSideBar from './RoleSideBar.jsx';
 
 const RolePage = () => {
   console.log("Rendering RolePage");
   const navigate = useNavigate();
   const location = useLocation();
   const [activeTab, setActiveTab] = useState('info');
-  const [showSettings, setShowSettings] = useState(false);
-  const settingsRef = useRef(null);
 
   // Get role from location state if available
   const role = location.state?.role;
@@ -39,29 +35,17 @@ const RolePage = () => {
   const handleEdit = (role) => {
     // Implement edit functionality
     console.log('Edit role:', role);
-    setShowSettings(false);
   };
 
   const handleDelete = (role) => {
     // Implement delete functionality
     console.log('Delete role:', role);
-    setShowSettings(false);
     navigate('/dashboard');
   };
 
-  // Close settings dropdown when clicking outside
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (settingsRef.current && !settingsRef.current.contains(event.target)) {
-        setShowSettings(false);
-      }
-    };
-
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-  }, []);
+  const handleTabChange = (tab) => {
+    setActiveTab(tab);
+  };
 
   if (isLoading) {
     return (
@@ -88,93 +72,13 @@ const RolePage = () => {
   return (
     <div className={styles.container}>
       <div className={styles.content}>
-        <div className={styles.sidebar}>
-
-          <div className={styles.sidebarHeader}>
-            <button className={styles.backButton} onClick={handleGoBack}>
-              <FontAwesomeIcon icon={faArrowLeft} />
-              <span>Dashboard</span>
-            </button>
-
-            <div className={styles.settingsWrapper} ref={settingsRef}>
-              <button
-                className={`${styles.settingsButton} ${showSettings ? styles.active : ''}`}
-                onClick={() => setShowSettings(!showSettings)}
-                aria-label="Settings"
-              >
-                <FontAwesomeIcon icon={faCog} />
-              </button>
-
-              {showSettings && (
-                <div className={styles.settingsDropdown}>
-                  <button
-                    className={styles.settingsItem}
-                    onClick={() => handleEdit(userRole)}
-                  >
-                    <FontAwesomeIcon icon={faEdit} />
-                    <span>Edit Role</span>
-                  </button>
-                  <button
-                    className={`${styles.settingsItem} ${styles.deleteItem}`}
-                    onClick={() => handleDelete(userRole)}
-                  >
-                    <FontAwesomeIcon icon={faTrash} />
-                    <span>Delete Role</span>
-                  </button>
-                </div>
-              )}
-            </div>
-          </div>
-
-          <div className={styles.profile}>
-            <div className={styles.logo}>
-              {userRole.company_logo ? (
-                <img src={userRole.company_logo} alt={`${userRole.company_name} logo`} />
-              ) : userRole.profile_pic ? (
-                <img src={userRole.profile_pic} alt="Role" />
-              ) : (
-                <div className={styles.placeholderLogo}>
-                  <FontAwesomeIcon icon={faBuilding} />
-                </div>
-              )}
-            </div>
-            <div className={styles.info}>
-              <h3 className={styles.title}>{userRole.title || 'Role Title'}</h3>
-              <p className={styles.companyName}>{userRole.company_name || 'Company Name'}</p>
-            </div>
-          </div>
-
-          <nav className={styles.nav}>
-            <button
-              className={`${styles.navItem} ${activeTab === 'info' ? styles.active : ''}`}
-              onClick={() => setActiveTab('info')}
-            >
-              <FontAwesomeIcon icon={faBuilding} />
-              <span>Role & Company Info</span>
-            </button>
-            <button
-              className={`${styles.navItem} ${activeTab === 'assignments' ? styles.active : ''}`}
-              onClick={() => setActiveTab('assignments')}
-            >
-              <FontAwesomeIcon icon={faClipboardList} />
-              <span>Assignments</span>
-            </button>
-            <button
-              className={`${styles.navItem} ${activeTab === 'permissions' ? styles.active : ''}`}
-              onClick={() => setActiveTab('permissions')}
-            >
-              <FontAwesomeIcon icon={faUserShield} />
-              <span>Permissions</span>
-            </button>
-            <button
-              className={`${styles.navItem} ${activeTab === 'reports' ? styles.active : ''}`}
-              onClick={() => setActiveTab('reports')}
-            >
-              <FontAwesomeIcon icon={faChartLine} />
-              <span>Reports</span>
-            </button>
-          </nav>
-        </div>
+        <RoleSideBar
+          userRole={userRole}
+          activeTab={activeTab}
+          onTabChange={handleTabChange}
+          onEdit={handleEdit}
+          onDelete={handleDelete}
+        />
 
         <div className={styles.mainContent}>
           {activeTab === 'info' && <InfoPanel role={userRole} />}

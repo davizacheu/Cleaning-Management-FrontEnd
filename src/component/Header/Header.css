@@ -1,58 +1,88 @@
-/* component/Header.css */
+/* Enhanced Header Styles */
 .header {
-  background-color: #ffffff;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-  position: sticky;
+  background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+  backdrop-filter: blur(10px);
+  box-shadow: 
+    0 1px 3px rgba(0, 0, 0, 0.1),
+    0 1px 2px rgba(0, 0, 0, 0.06);
+  position: fixed;
   top: 0;
+  left: 0;
   z-index: 1000;
-  padding: 1rem 0;
+  padding: 0;
   width: 100%;
+  height: var(--header-height);
+  box-sizing: border-box;
+  border-bottom: 1px solid rgba(203, 213, 225, 0.3);
+  transition: all 0.3s ease;
 }
 
 .header-content {
   display: flex;
   align-items: center;
-  gap: 2rem;
   justify-content: space-between;
   width: 100%;
-  max-width: 100%;
-  padding: 0 2rem; /* Add horizontal padding */
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 2rem;
+  height: 100%;
 }
 
-
+/* Enhanced Logo Section */
 .logo-container {
   display: flex;
   align-items: center;
-  flex-shrink: 0; /* Prevent logo from shrinking */
+  flex-shrink: 0;
 }
 
-.logo-container a {
+.logo-link {
   display: flex;
   align-items: center;
   gap: 0.75rem;
   text-decoration: none;
+  transition: transform 0.2s ease;
+}
+
+.logo-link:hover {
+  transform: translateY(-1px);
 }
 
 .brand-logo {
-  height: 35px;
+  height: 40px;
   width: auto;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
 }
 
-.logo-container h1 {
+.brand-text {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.brand-text h1 {
   margin: 0;
   font-size: 1.5rem;
-  font-weight: bold;
+  font-weight: 700;
   color: var(--color-primary);
+  line-height: 1;
 }
 
-.nav {
-  margin-left: auto; /* This keeps the login button on the right */
-  flex-shrink: 0; /* Prevent login from shrinking */
+.brand-tagline {
+  font-size: 0.75rem;
+  color: var(--color-text-light);
+  font-weight: 500;
+  margin-top: -2px;
 }
 
-/* New navigation links section */
+/* Enhanced Navigation */
 .main-nav {
-  flex-grow: 1; /* Take available space, but don't push login to edge */
+  flex-grow: 1;
+  display: flex;
+  justify-content: center;
+}
+
+.desktop-nav {
+  display: flex;
 }
 
 .main-nav ul {
@@ -60,166 +90,339 @@
   padding: 0;
   margin: 0;
   display: flex;
-  gap: 1.5rem;
+  gap: 2rem;
   align-items: center;
 }
 
-.loading-indicator {
-  font-size: 14px;
-  color: #666;
-  padding: 8px 15px;
-  background-color: #f5f5f5;
-  border-radius: 4px;
-  animation: pulse 1.5s infinite;
-}
-
-@keyframes pulse {
-  0% { opacity: 0.6; }
-  50% { opacity: 1; }
-  100% { opacity: 0.6; }
-}
-
-.main-nav a {
+.nav-link {
   font-weight: 500;
-  padding: 0.5rem;
+  padding: 0.75rem 1rem;
   color: var(--color-text-light);
-  transition: color 0.3s ease;
+  transition: all 0.3s ease;
+  border-radius: var(--radius-md);
+  position: relative;
+  text-decoration: none;
 }
 
-.main-nav a:hover, .main-nav a.active {
+.nav-link::before {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--color-primary), var(--color-primary-dark));
+  transition: all 0.3s ease;
+  transform: translateX(-50%);
+}
+
+.nav-link:hover {
   color: var(--color-primary);
+  background-color: rgba(2, 132, 199, 0.05);
 }
 
-/* Optional: Adjust spacing within the navigation */
-.auth-nav ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
+.nav-link:hover::before,
+.nav-link.active::before {
+  width: 80%;
+}
+
+.nav-link.active {
+  color: var(--color-primary);
+  font-weight: 600;
+}
+
+/* Enhanced Auth Section */
+.auth-nav {
   display: flex;
-  gap: 1.5rem;
   align-items: center;
+  gap: 1rem;
+  flex-shrink: 0;
 }
 
-.auth-nav a {
-  font-weight: 500;
-  padding: 0.5rem;
-  color: var(--color-text-light);
-  transition: color 0.3s ease;
+/* Enhanced Login Button */
+.login-btn {
+  padding: 0.625rem 1.5rem;
+  font-weight: 600;
+  border-radius: 50px;
+  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
+  box-shadow: 0 4px 12px rgba(2, 132, 199, 0.3);
+  transition: all 0.3s ease;
+  border: none;
+  color: white;
+  position: relative;
+  overflow: hidden;
 }
 
-.auth-nav a:hover, .auth-nav a.active {
-  color: var(--color-primary);
+.login-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.6s ease;
 }
 
-/* Keep backward compatibility */
-.nav-links {
-  flex-grow: 1;
+.login-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(2, 132, 199, 0.4);
 }
 
-.nav-links ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  display: flex;
-  gap: 1.5rem;
-  align-items: center;
+.login-btn:hover::before {
+  left: 100%;
 }
 
-.nav-links a {
-  font-weight: 500;
-  padding: 0.5rem;
-  color: var(--color-text-light);
-  transition: color 0.3s ease;
-}
-
-.nav-links a:hover, .nav-links a.active {
-  color: var(--color-primary);
-}
-
-.nav ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  display: flex;
-  gap: 1.5rem;
-  align-items: center;
-}
-
-.nav a {
-  font-weight: 500;
-  padding: 0.5rem;
-  color: var(--color-text-light);
-  transition: color 0.3s ease;
-}
-
-.nav a:hover, .nav a.active {
-  color: var(--color-primary);
-}
-
-/* Updated User dropdown styling with improved icon */
+/* Enhanced User Dropdown */
 .user-dropdown {
   position: relative;
+  z-index: 1020; /* Ensure dropdown appears above other elements */
 }
 
-/* Enhanced user icon button */
+/* Enhanced User Dropdown */
+.user-dropdown {
+  position: relative;
+  z-index: 1020; /* Ensure dropdown appears above other elements */
+}
+
+/* Enhanced User Icon Button - Similar to Sign In button */
 .user-icon-btn {
-  background: linear-gradient(135deg, var(--color-primary, #4f46e5) 0%, var(--color-primary-dark, #4338ca) 100%);
+  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
   color: white;
   border: none;
-  width: 42px;
-  height: 42px;
-  border-radius: 50%;
+  width: 44px;
+  height: 44px;
+  border-radius: 50px; /* Changed from 50% to match login button's rounded style */
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  font-size: 1.1rem;
   transition: all 0.3s ease;
-  box-shadow: 0 2px 6px rgba(79, 70, 229, 0.3);
+  box-shadow: 0 4px 12px rgba(2, 132, 199, 0.3); /* Matches login button shadow */
   position: relative;
-  overflow: hidden;
+  outline: none;
+  font-weight: 600; /* Added font-weight to match login button */
+  overflow: hidden; /* Added for shimmer effect */
 }
 
+/* Added shimmer effect like login button */
 .user-icon-btn::before {
-  content: "";
+  content: '';
   position: absolute;
   top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: 50%;
-  transform: scale(0);
-  transition: transform 0.3s ease;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.6s ease;
 }
 
 .user-icon-btn:hover {
-  box-shadow: 0 4px 10px rgba(79, 70, 229, 0.4);
-  transform: translateY(-2px);
+  background: linear-gradient(135deg, var(--color-primary-dark) 0%, var(--color-primary) 100%); /* Inverted gradient on hover */
+  transform: translateY(-2px); /* Matches login button hover transform */
+  box-shadow: 0 6px 20px rgba(2, 132, 199, 0.4); /* Enhanced shadow like login button */
 }
 
 .user-icon-btn:hover::before {
-  transform: scale(1);
+  left: 100%; /* Shimmer effect on hover */
 }
 
-.user-icon-btn:active {
-  transform: translateY(0px);
-  box-shadow: 0 2px 4px rgba(79, 70, 229, 0.25);
+.user-icon-btn.active {
+  background: linear-gradient(135deg, var(--color-primary-dark) 0%, var(--color-primary) 100%);
+  box-shadow: 0 6px 20px rgba(2, 132, 199, 0.4);
+  transform: translateY(-1px);
 }
 
+.user-icon-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1; /* Ensure icon appears above shimmer effect */
+}
+
+.user-icon {
+  font-size: 1.1rem;
+  transition: transform 0.2s ease;
+}
+
+.user-icon-btn:hover .user-icon {
+  transform: scale(1.05);
+}
+
+.user-icon-ring {
+  display: none; /* Simplified - remove ring effect */
+}
+
+/* Enhanced User Indicator - positioned relative to dropdown container */
+.user-indicator {
+  position: absolute;
+  top: 2px;
+  right: 2px;
+  width: 12px;
+  height: 12px;
+  background: #10b981;
+  border: 2px solid white;
+  border-radius: 50%;
+  z-index: 10;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+  pointer-events: none; /* Allow clicks to pass through to button */
+}
+
+
+/* Enhanced focus state for accessibility */
+.user-icon-btn:focus {
+  box-shadow: 
+    0 6px 20px rgba(2, 132, 199, 0.4),
+    0 0 0 2px rgba(2, 132, 199, 0.3);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .user-icon-btn {
+    width: 40px;
+    height: 40px;
+  }
+  
+  .user-icon {
+    font-size: 1rem;
+  }
+  
+  .user-indicator {
+    width: 10px;
+    height: 10px;
+    top: 2px;
+    right: 2px;
+  }
+}
+
+/* Enhanced Dropdown Menu */
 .dropdown-menu {
   position: absolute;
   right: 0;
-  top: calc(100% + 0.75rem);
-  background-color: white;
-  border-radius: 12px;
-  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-  min-width: 220px;
+  top: calc(100% + 0.75rem); /* Adjusted spacing */
+  background: white;
+  border-radius: 16px;
+  box-shadow: 
+    0 20px 25px -5px rgba(0, 0, 0, 0.1),
+    0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  min-width: 280px;
+  max-width: 320px; /* Prevent overflow on small screens */
   overflow: hidden;
-  z-index: 1010;
+  z-index: 1030; /* Higher than user-dropdown */
   transform-origin: top right;
   animation: dropdown-in 0.2s ease forwards;
   border: 1px solid rgba(0, 0, 0, 0.05);
+  backdrop-filter: blur(10px); /* Add backdrop blur */
+}
+
+.dropdown-header {
+  padding: 1.25rem;
+  background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+  border-bottom: 1px solid rgba(203, 213, 225, 0.3);
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  min-width: 0; /* Prevent flex items from overflowing */
+}
+
+.user-avatar {
+  width: 48px;
+  height: 48px;
+  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 1.2rem;
+  flex-shrink: 0; /* Prevent avatar from shrinking */
+}
+
+.user-details {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  min-width: 0; /* Allow text to truncate */
+  flex: 1;
+}
+
+.user-name {
+  font-weight: 600;
+  color: var(--color-text);
+  font-size: 0.95rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis; /* Handle long names */
+}
+
+.user-email {
+  font-size: 0.8rem;
+  color: var(--color-text-light);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis; /* Handle long emails */
+}
+
+.dropdown-divider {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(203, 213, 225, 0.5), transparent);
+  margin: 0.5rem 0;
+}
+
+.dropdown-item {
+  position: relative; /* For proper hover effects */
+}
+
+.dropdown-item a,
+.dropdown-item button,
+.dropdown-link {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.875rem 1.25rem;
+  text-decoration: none;
+  color: var(--color-text);
+  transition: all 0.2s ease;
+  width: 100%;
+  text-align: left;
+  border: none;
+  background: none;
+  font-size: 0.95rem;
+  cursor: pointer;
+  font-weight: 500;
+  font-family: inherit; /* Ensure consistent font */
+}
+
+.dropdown-item a:hover,
+.dropdown-item button:hover,
+.dropdown-link:hover {
+  background: linear-gradient(135deg, rgba(2, 132, 199, 0.05) 0%, rgba(2, 132, 199, 0.1) 100%);
+  color: var(--color-primary);
+}
+
+.dropdown-item svg {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0; /* Prevent icons from shrinking */
+}
+
+.logout-item button:hover,
+.logout-item .dropdown-link:hover {
+  background: linear-gradient(135deg, rgba(239, 68, 68, 0.05) 0%, rgba(239, 68, 68, 0.1) 100%);
+  color: #dc2626;
+}
+
+.logout-item button,
+.logout-item .dropdown-link {
+  color: #dc2626;
+}
+
+.logout-item svg {
+  color: #dc2626;
 }
 
 @keyframes dropdown-in {
@@ -233,53 +436,184 @@
   }
 }
 
-.dropdown-menu a,
-.dropdown-menu button,
-.dropdown-menu .dropdown-link {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-  padding: 0.875rem 1.25rem;
-  text-decoration: none;
-  color: var(--color-text, #374151);
-  transition: all 0.2s ease;
-  width: 100%;
-  text-align: left;
-  border: none;
+/* Responsive fixes for dropdown */
+@media (max-width: 768px) {
+  .dropdown-menu {
+    min-width: 260px;
+    right: -0.5rem; /* Adjust positioning for mobile */
+    max-width: calc(100vw - 2rem); /* Prevent overflow */
+  }
+  
+  .user-details {
+    max-width: 160px; /* Limit width on mobile */
+  }
+}
+
+@media (max-width: 480px) {
+  .dropdown-menu {
+    right: -1rem;
+    min-width: 240px;
+    max-width: calc(100vw - 1.5rem);
+  }
+  
+  .dropdown-header {
+    padding: 1rem;
+  }
+  
+  .dropdown-item a,
+  .dropdown-item button,
+  .dropdown-link {
+    padding: 0.75rem 1rem;
+    font-size: 0.9rem;
+  }
+}
+
+/* Mobile Menu Styles */
+.mobile-menu-toggle {
+  display: none;
   background: none;
-  font-size: 0.95rem;
+  border: none;
+  font-size: 1.5rem;
+  color: var(--color-text);
   cursor: pointer;
-  font-weight: 500;
+  padding: 0.5rem;
+  border-radius: var(--radius-md);
+  transition: all 0.2s ease;
 }
 
-.dropdown-menu a svg,
-.dropdown-menu button svg {
-  color: var(--color-primary, #4f46e5);
-  font-size: 1.1rem;
-  opacity: 0.9;
+.mobile-menu-toggle:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+  color: var(--color-primary);
 }
 
-/* Make logout text and icon red */
-.dropdown-menu .dropdown-link {
-  color: #e53e3e; /* Red text for logout */
+.mobile-nav {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: white;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  border-top: 1px solid rgba(203, 213, 225, 0.3);
+  transform: translateY(-100%);
+  opacity: 0;
+  transition: all 0.3s ease;
 }
 
-.dropdown-menu .dropdown-link svg {
-  color: #e53e3e; /* Red icon for logout */
+.mobile-nav.open {
+  transform: translateY(0);
   opacity: 1;
 }
 
-.dropdown-menu a:hover,
-.dropdown-menu button:hover {
-  background-color: #f9f9fb;
+.mobile-nav ul {
+  list-style: none;
+  padding: 1rem 0;
+  margin: 0;
 }
 
-.dropdown-menu .dropdown-link:hover {
-  background-color: #FEF2F2; /* Light red background on hover */
+.mobile-nav li {
+  border-bottom: 1px solid rgba(203, 213, 225, 0.2);
 }
 
-/* Remove focus outline that causes the blue/black contour */
-.dropdown-menu button:focus,
-.dropdown-menu .dropdown-link:focus {
-  outline: none;
+.mobile-nav .nav-link {
+  display: block;
+  padding: 1rem 2rem;
+  color: var(--color-text);
+  font-weight: 500;
+  border-radius: 0;
+}
+
+.mobile-nav .nav-link:hover,
+.mobile-nav .nav-link.active {
+  background-color: rgba(2, 132, 199, 0.05);
+  color: var(--color-primary);
+}
+
+.mobile-menu-backdrop {
+  position: fixed;
+  top: var(--header-height);
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.3);
+  z-index: 999;
+}
+
+/* Enhanced Loading Indicator */
+.loading-indicator {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.875rem;
+  color: var(--color-text-light);
+  padding: 0.5rem 1rem;
+  background: rgba(248, 250, 252, 0.8);
+  border-radius: 50px;
+  border: 1px solid rgba(203, 213, 225, 0.3);
+}
+
+.loading-spinner {
+  width: 16px;
+  height: 16px;
+  border: 2px solid rgba(2, 132, 199, 0.2);
+  border-top: 2px solid var(--color-primary);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes dropdown-in {
+  from {
+    opacity: 0;
+    transform: scale(0.95) translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .header-content {
+    padding: 0 1rem;
+  }
+
+  .brand-text {
+    display: none;
+  }
+
+  .desktop-nav {
+    display: none;
+  }
+
+  .mobile-menu-toggle {
+    display: block;
+  }
+
+  .mobile-nav {
+    display: block;
+  }
+
+  .dropdown-menu {
+    min-width: 260px;
+    right: -1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .header-content {
+    padding: 0 0.75rem;
+  }
+
+  .brand-logo {
+    height: 32px;
+  }
+
+  .logo-container h1 {
+    font-size: 1.25rem;
+  }
 }
