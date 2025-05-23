@@ -1,13 +1,15 @@
-
 /* components/LoginPanel/LoginPanel.css */
-/* Add this at the top of the CSS file */
 body.login-panel-open {
   overflow: hidden;
-  position: fixed;
-  width: 100%;
-  top: 0;
-  left: 0;
-  right: 0;
+}
+
+body.compensate-scrollbar {
+  padding-right: var(--scrollbar-width, 17px); /* Default to 17px if variable not set */
+}
+
+/* Prevent the header from being affected */
+body.compensate-scrollbar .header {
+  padding-right: var(--scrollbar-width, 17px);
 }
 
 
@@ -22,6 +24,8 @@ body.login-panel-open {
   transition: right 0.3s ease;
   z-index: 1001;
   overflow-y: auto;
+  /* Ensure panel covers scrollbar area */
+  margin-right: 0;
 }
 
 .login-panel.open {
