@@ -4,6 +4,11 @@ body.login-panel-open {
   padding-right: var(--scrollbar-width, 0px);
 }
 
+/* Fix header jump by applying same padding compensation to fixed header */
+body.login-panel-open .header {
+  padding-right: var(--scrollbar-width, 0px);
+}
+
 /* Backdrop for better UX */
 .login-panel-backdrop {
   position: fixed;
