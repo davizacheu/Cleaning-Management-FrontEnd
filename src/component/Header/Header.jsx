@@ -136,9 +136,6 @@ const Header = () => {
                           <div className="user-icon-ring"></div>
                         </div>
                       </button>
-
-                      {/* Position indicator relative to button container */}
-                      <span className="user-indicator"></span>
                     </div>
 
                     {dropdownOpen && (

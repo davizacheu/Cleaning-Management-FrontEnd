@@ -165,7 +165,6 @@
 }
 
 .login-btn:hover {
-  transform: translateY(-2px);
   box-shadow: 0 6px 20px rgba(2, 132, 199, 0.4);
 }
 
@@ -219,7 +218,6 @@
 
 .user-icon-btn:hover {
   background: linear-gradient(135deg, var(--color-primary-dark) 0%, var(--color-primary) 100%); /* Inverted gradient on hover */
-  transform: translateY(-2px); /* Matches login button hover transform */
   box-shadow: 0 6px 20px rgba(2, 132, 199, 0.4); /* Enhanced shadow like login button */
 }
 
@@ -253,22 +251,6 @@
 .user-icon-ring {
   display: none; /* Simplified - remove ring effect */
 }
-
-/* Enhanced User Indicator - positioned relative to dropdown container */
-.user-indicator {
-  position: absolute;
-  top: 2px;
-  right: 2px;
-  width: 12px;
-  height: 12px;
-  background: #10b981;
-  border: 2px solid white;
-  border-radius: 50%;
-  z-index: 10;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
-  pointer-events: none; /* Allow clicks to pass through to button */
-}
-
 
 /* Enhanced focus state for accessibility */
 .user-icon-btn:focus {
